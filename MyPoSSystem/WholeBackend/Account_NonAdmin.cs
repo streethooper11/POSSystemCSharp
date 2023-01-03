@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using MyPoSSystem.WholeBackend.Abstracts;
 
 namespace MyPoSSystem.WholeBackend
 {
-    public class AddonItem : Item
+    // Abstract representation of an account with username and PIN
+    public class Account_NonAdmin : Account
     {
-        public AddonItem(string name, decimal price) : base(name, price)
+        public Account_NonAdmin(string name, int pin) : base(name, pin)
         {
         }
     }

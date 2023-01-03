@@ -6,19 +6,17 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.Session
+namespace MyPoSSystem.WholeBackend.Abstracts
 {
-    public class Account
+    // Abstract representation of an item group which contains name
+    public abstract class ItemGroup
     {
         private string _name;
-        private int _PIN;
-        private bool _isAdmin;
+        public string Name => _name;
 
-        public Account(string name, int pin, bool isAdmin)
+        public ItemGroup(string name)
         {
             _name = name;
-            _PIN = pin;
-            _isAdmin = isAdmin;
         }
     }
 }
