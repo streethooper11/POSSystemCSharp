@@ -13,16 +13,16 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 {
     public abstract class SessionDB
     {
-        protected Dictionary<int, Account>? AccountDictionary;
+        protected Dictionary<int, Account>? AccountDictionary; // key is button ID
         protected bool AccountChanged;
 
-        protected Dictionary<int, Item_Main>? ItemMainDictionary;
+        protected Dictionary<int, Item_Main>? ItemMainDictionary; // key is button ID
         protected bool ItemMainChanged;
 
-        protected Dictionary<int, Item_Option>? ItemOptionDictionary;
+        protected Dictionary<int, Item_Option>? ItemOptionDictionary; // key is button ID
         protected bool ItemOptionChanged;
 
-        protected Dictionary<int, Menu_Option>? MenuOptionDictionary;
+        protected Dictionary<int, Menu_Option>? MenuOptionDictionary; // key is button ID
         protected bool MenuOptionChanged;
 
         protected TopGroup? TopGroup;
@@ -30,7 +30,6 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 
         protected Settings? Settings;
         protected bool SettingsChanged;
-
 
         public void SetSessionFromDB()
         {
