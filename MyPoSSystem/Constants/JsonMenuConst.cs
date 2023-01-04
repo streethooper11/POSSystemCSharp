@@ -5,9 +5,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem.Constants
 {
-    public class SettingKey
+    public class JsonSettingConst
     {
+        public const string Currency = "currency";
+        public const string Tax = "tax";
     }
 }

@@ -17,13 +17,15 @@ namespace MyPoSSystem.WholeBackend
     public class Item_Main : Item
     {
         private ItemGroup_Option? _optionItemGroup;
+        private string _category;
 
-        public Item_Main(string name, decimal price) : base(name, price)
+        public Item_Main(string name, decimal price, string category) : base(name, price)
         {
+            _category = category;
             _optionItemGroup = null;
         }
 
-        public Item_Main(string name, decimal price, ItemGroup_Option optionItemGroup) : base(name, price)
+        public Item_Main(string name, decimal price, string category, ItemGroup_Option optionItemGroup) : this(name, price, category)
         {
             _optionItemGroup = optionItemGroup;
         }

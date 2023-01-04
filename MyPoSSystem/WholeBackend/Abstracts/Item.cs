@@ -25,13 +25,6 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected Item(string name, decimal price)
-        {
-            _name = name;
-            _price = price;
-            _items = new Dictionary<int, int>();
-        }
-
         public string Name
         {
             get { return _name; }
@@ -56,6 +49,13 @@ namespace MyPoSSystem.WholeBackend.Abstracts
                     OnPropertyChanged();
                 }
             }
+        }
+
+        protected Item(string name, decimal price)
+        {
+            _name = name;
+            _price = price;
+            _items = new Dictionary<int, int>();
         }
 
         // Create the OnPropertyChanged method to raise the event

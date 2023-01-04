@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MyPoSSystem.Constants;
 using MyPoSSystem.WholeBackend.Abstracts;
 using MyPoSSystem.WholeBackend.Security;
 
@@ -28,7 +29,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             AccountDictionary = JsonSerializer.Deserialize<Dictionary<int, Account>>
                 (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePath.AccountsPath))
+                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.AccountsPath))
                 );
         }
 
@@ -36,7 +37,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             File.WriteAllBytes
                 (
-                    FilePath.AccountsPath,
+                    FilePathConst.AccountsPath,
                     JSonCrypto.EncryptJson
                         (
                             JsonSerializer.Serialize

@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem.Constants
 {
-    public class FilePath
+    public class FilePathConst
     {
         public const string AccountsPath = "DB\\Accounts.json";
         public const string CategoriesPath = "DB\\Categories.json";

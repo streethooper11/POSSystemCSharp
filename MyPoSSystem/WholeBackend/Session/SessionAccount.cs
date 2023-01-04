@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MyPoSSystem.WholeBackend.Abstracts;
+
 namespace MyPoSSystem.WholeBackend.Session
 {
     public class SessionAccount
