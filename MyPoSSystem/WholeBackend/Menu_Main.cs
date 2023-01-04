@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace MyPoSSystem.WholeBackend.Abstracts
 {
-    // An item group that contains the list of main menus
-    public class ItemGroup_Option : ItemGroup
+    // A menu that contains a list of main items
+    public class Menu_Main : Menu
     {
-        public ItemGroup_Option(string name) : base(name)
+        public Menu_Main(string name) : base(name)
+        {
+        }
+
+        public Menu_Main(string name, Dictionary<int, int> items) : base(name, items)
         {
         }
     }

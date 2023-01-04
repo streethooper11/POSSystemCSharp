@@ -10,28 +10,28 @@ namespace MyPoSSystem.WholeBackend.Session
 {
     public class TopGroup
     {
-        // key is button ID, value is itemGroup_Main ID
-        private Dictionary<int, int> _itemGroups;
-        public Dictionary<int, int> ItemGroups => _itemGroups;
+        // key is button ID, value is menu ID
+        private Dictionary<int, int> _menus;
+        public Dictionary<int, int> Menus => _menus;
 
         public TopGroup() 
         {
-            _itemGroups = new Dictionary<int, int>();
+            _menus = new Dictionary<int, int>();
         }
 
-        public TopGroup(Dictionary<int, int> itemGroups)
+        public TopGroup(Dictionary<int, int> menus)
         {
-            _itemGroups = itemGroups;
+            _menus = menus;
         }
 
-        public void AddItemGroupToTopGroup(int buttonId, int itemGroupId)
+        public void AddMenuToTopGroup(int buttonId, int menuId)
         {
-            _itemGroups[buttonId] = itemGroupId;
+            _menus[buttonId] = menuId;
         }
 
         public void DeleteItemGroupFromTopGroup(int buttonId)
         {
-            _itemGroups.Remove(buttonId);
+            _menus.Remove(buttonId);
         }
     }
 }

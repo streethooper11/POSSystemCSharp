@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyPoSSystem.Constants
 {
-    public class JsonSettingConst
+    public class SettingConst
     {
         public const string Currency = "currency";
+        public const string Language = "language";
+        public const string Printer = "printer";
         public const string Tax = "tax";
     }
 }

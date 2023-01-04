@@ -13,5 +13,7 @@ namespace MyPoSSystem.Constants
         public const string CategoriesPath = "DB\\Categories.json";
         public const string ItemsPath = "DB\\Items.json";
         public const string SettingsPath = "DB\\Settings.json";
+        public const string OrderPath = "DB\\Orders.json";
+        public const string BackupExt = ".bak";
     }
 }

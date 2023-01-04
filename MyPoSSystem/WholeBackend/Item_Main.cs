@@ -11,23 +11,23 @@ using MyPoSSystem.WholeBackend.Abstracts;
 namespace MyPoSSystem.WholeBackend
 {
     /**
-     * Main item is a menu item that can be sold separately
-     * It may contain an option item group that you can choose
+     * Main item is an item that can be sold separately
+     * It may contain an option menu that you can choose
      */
     public class Item_Main : Item
     {
-        private ItemGroup_Option? _optionItemGroup;
+        private Menu_Option? _optionMenu;
         private string _category;
 
         public Item_Main(string name, decimal price, string category) : base(name, price)
         {
             _category = category;
-            _optionItemGroup = null;
+            _optionMenu = null;
         }
 
-        public Item_Main(string name, decimal price, string category, ItemGroup_Option optionItemGroup) : this(name, price, category)
+        public Item_Main(string name, decimal price, string category, Menu_Option optionMenu) : this(name, price, category)
         {
-            _optionItemGroup = optionItemGroup;
+            _optionMenu = optionMenu;
         }
     }
 }
