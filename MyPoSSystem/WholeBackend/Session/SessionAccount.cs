@@ -11,11 +11,11 @@ namespace MyPoSSystem.WholeBackend.Session
     public class SessionAccount
     {
         private string? _tempLoginName;
-        private static Account? Account_session;
+        private static Account? s_accountSession;
 
         public static void SetSessionAccount(Account account)
         {
-            Account_session = account;
+            s_accountSession = account;
         }
     }
 }
