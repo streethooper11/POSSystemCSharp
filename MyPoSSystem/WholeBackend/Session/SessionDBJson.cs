@@ -13,48 +13,40 @@ namespace MyPoSSystem.WholeBackend.Session
 {
     public class SessionDBJson : SessionDB
     {
+        private readonly JsonWorker _jsonWorker;
+
+        public SessionDBJson() : base() 
+        { 
+            _jsonWorker = new JsonWorker();
+        }
+
         protected override void SetAccountFromDB()
         {
-            AccountDictionary = JsonSerializer.Deserialize<Dictionary<int, Account>>
-                (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.AccountPath))
-                );
+           AccountDictionary = (Dictionary<int, Account>?)_jsonWorker.ReadDataFromDB(FilePathConst.AccountPath);
             AccountChanged = false;
         }
 
         protected override void SetItemMainFromDB()
         {
-            ItemMainDictionary = JsonSerializer.Deserialize<Dictionary<int, Item_Main>>
-                (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.ItemMainPath))
-                );
+            ItemMainDictionary = (Dictionary<int, Item_Main>?)_jsonWorker.ReadDataFromDB(FilePathConst.ItemMainPath);
             ItemMainChanged = false;
         }
 
         protected override void SetItemOptionFromDB()
         {
-            ItemOptionDictionary = JsonSerializer.Deserialize<Dictionary<int, Item_Option>>
-                (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.ItemOptionPath))
-                );
+            ItemOptionDictionary = (Dictionary<int, Item_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.ItemOptionPath); 
             ItemOptionChanged = false;
         }
 
         protected override void SetMenuOptionFromDB()
         {
-            MenuOptionDictionary = JsonSerializer.Deserialize<Dictionary<int, Menu_Option>>
-                (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.MenuOptionPath))
-                );
+            MenuOptionDictionary = (Dictionary<int, Menu_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.MenuOptionPath);
             MenuOptionChanged = false;
         }
 
         protected override void SetTopGroupFromDB()
         {
-            TopGroup = JsonSerializer.Deserialize<TopGroup>
-                (
-                    JSonCrypto.DecryptJson(File.ReadAllBytes(FilePathConst.TopGroupPath))
-                );
+            TopGroup = (TopGroup?)_jsonWorker.ReadDataFromDB(FilePathConst.TopGroupPath);
             TopGroupChanged = false;
         }
 
@@ -62,19 +54,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             if (AccountChanged)
             {
-                File.WriteAllBytes
-                    (
-                        FilePathConst.AccountPath,
-                        JSonCrypto.EncryptJson
-                            (
-                                JsonSerializer.Serialize
-                                    (
-                                        AccountDictionary,
-                                        new JsonSerializerOptions { WriteIndented = true }
-                                    )
-
-                            )
-                    );
+                _jsonWorker.SaveDataToDBFile(FilePathConst.AccountPath, AccountDictionary);
             }
         }
 
@@ -82,19 +62,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             if (ItemMainChanged)
             {
-                File.WriteAllBytes
-                    (
-                        FilePathConst.ItemMainPath,
-                        JSonCrypto.EncryptJson
-                            (
-                                JsonSerializer.Serialize
-                                    (
-                                        ItemMainDictionary,
-                                        new JsonSerializerOptions { WriteIndented = true }
-                                    )
-
-                            )
-                    );
+                _jsonWorker.SaveDataToDBFile(FilePathConst.ItemMainPath, ItemMainDictionary);
             }
         }
 
@@ -102,19 +70,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             if (ItemOptionChanged)
             {
-                File.WriteAllBytes
-                    (
-                        FilePathConst.ItemOptionPath,
-                        JSonCrypto.EncryptJson
-                            (
-                                JsonSerializer.Serialize
-                                    (
-                                        ItemOptionDictionary,
-                                        new JsonSerializerOptions { WriteIndented = true }
-                                    )
-
-                            )
-                    );
+                _jsonWorker.SaveDataToDBFile(FilePathConst.ItemOptionPath, ItemOptionDictionary);
             }
         }
 
@@ -122,19 +78,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             if (MenuOptionChanged)
             {
-                File.WriteAllBytes
-                    (
-                        FilePathConst.MenuOptionPath,
-                        JSonCrypto.EncryptJson
-                            (
-                                JsonSerializer.Serialize
-                                    (
-                                        MenuOptionDictionary,
-                                        new JsonSerializerOptions { WriteIndented = true }
-                                    )
-
-                            )
-                    );
+                _jsonWorker.SaveDataToDBFile(FilePathConst.MenuOptionPath, MenuOptionDictionary);
             }
         }
 
@@ -142,19 +86,7 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             if (TopGroupChanged)
             {
-                File.WriteAllBytes
-                    (
-                        FilePathConst.TopGroupPath,
-                        JSonCrypto.EncryptJson
-                            (
-                                JsonSerializer.Serialize
-                                    (
-                                        TopGroup,
-                                        new JsonSerializerOptions { WriteIndented = true }
-                                    )
-
-                            )
-                    );
+                _jsonWorker.SaveDataToDBFile(FilePathConst.TopGroupPath, TopGroup);
             }
         }
     }

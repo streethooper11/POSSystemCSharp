@@ -7,26 +7,40 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using MyPoSSystem.WholeBackend.Abstracts;
+using MyPoSSystem.WholeBackend.Security;
+using MyPoSSystem.WholeBackend.Session;
 
 namespace MyPoSSystem.WholeBackend
 {
     public class JsonWorker : DBWorker
     {
-        public override void SaveDictionaryToDBFile<K, V>(string filePath, Dictionary<K, V> keyValuePairs)
+        public override void SaveDataToDBFile(string filePath, object? obj)
         {
-            File.WriteAllText(filePath, JsonSerializer.Serialize(keyValuePairs, new JsonSerializerOptions { WriteIndented = true }));
+            File.WriteAllBytes
+                (
+                    filePath,
+                    JSonCrypto.EncryptJson
+                        (
+                            JsonSerializer.Serialize
+                                (
+                                    obj,
+                                    new JsonSerializerOptions { WriteIndented = true }
+                                )
+
+                        )
+                );
         }
 
-        public override Dictionary<K, V> ReadDictionaryFromDB<K, V>(string filePath)
+        public override object ReadDataFromDB(string filePath)
         {
-            string json = File.ReadAllText(filePath);
+            byte[] json = File.ReadAllBytes(filePath);
 
-            if (string.IsNullOrEmpty(json))
+            if (json.Length == 0)
             {
-                return new Dictionary<K, V>();
+                return new object();
             }
 
-            return new Dictionary<K, V>(JsonSerializer.Deserialize<Dictionary<K, V>>(json));
+            return JsonSerializer.Deserialize<object>(JSonCrypto.DecryptJson(json));
         }
     }
 }

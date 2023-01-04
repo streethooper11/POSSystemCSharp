@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyPoSSystem.WholeBackend.Session;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             File.Delete(filePath);
         }
 
-        public abstract void SaveDictionaryToDBFile<K, V>(string filePath, Dictionary<K, V> keyValuePairs) where K : notnull;
-        public abstract Dictionary<K, V> ReadDictionaryFromDB<K, V>(string filePath) where K : notnull;
+        public abstract void SaveDataToDBFile(string filePath, object obj);
+        public abstract object ReadDataFromDB(string filePath);
     }
 }
