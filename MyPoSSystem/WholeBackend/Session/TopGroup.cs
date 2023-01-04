@@ -10,9 +10,19 @@ namespace MyPoSSystem.WholeBackend.Session
 {
     public class TopGroup
     {
-        // key is button ID, value is itemGroup ID
+        // key is button ID, value is itemGroup_Main ID
         private Dictionary<int, int> _itemGroups;
         public Dictionary<int, int> ItemGroups => _itemGroups;
+
+        public TopGroup() 
+        {
+            _itemGroups = new Dictionary<int, int>();
+        }
+
+        public TopGroup(Dictionary<int, int> itemGroups)
+        {
+            _itemGroups = itemGroups;
+        }
 
         public void AddItemGroupToTopGroup(int buttonId, int itemGroupId)
         {

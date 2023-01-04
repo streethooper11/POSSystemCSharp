@@ -12,6 +12,6 @@ namespace MyPoSSystem.WholeBackend
         public const string AccountsPath = "DB\\Accounts.json";
         public const string CategoriesPath = "DB\\Categories.json";
         public const string ItemsPath = "DB\\Items.json";
-        public const string OptionsPath = "DB\\Options.json";
+        public const string SettingsPath = "DB\\Settings.json";
     }
 }

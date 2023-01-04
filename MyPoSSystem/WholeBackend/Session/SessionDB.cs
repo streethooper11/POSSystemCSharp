@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-
+using MyPoSSystem.WholeBackend.Abstracts;
 using MyPoSSystem.WholeBackend.Security;
 
 namespace MyPoSSystem.WholeBackend.Session

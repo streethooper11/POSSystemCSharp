@@ -10,7 +10,6 @@ using MyPoSSystem.WholeBackend.Abstracts;
 
 namespace MyPoSSystem.WholeBackend
 {
-    // Abstract representation of an account with username and PIN
     public class Account_NonAdmin : Account
     {
         public Account_NonAdmin(string name, int pin) : base(name, pin)
