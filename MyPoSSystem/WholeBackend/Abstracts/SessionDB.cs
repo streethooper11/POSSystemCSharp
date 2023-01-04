@@ -22,6 +22,9 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected Dictionary<int, Item_Option>? AllItemOptionDictionary; // key is Item_Option ID
         protected bool AllItemOptionChanged;
 
+        protected Dictionary<int, Menu_Main>? AllMenuMainDictionary; // key is Menu_Main ID
+        protected bool AllMenuMainChanged;
+
         protected Dictionary<int, Menu_Option>? AllMenuOptionDictionary; // key is Menu_Option ID
         protected bool AllMenuOptionChanged;
 
@@ -43,6 +46,10 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         public void SetSessionFromDB()
         {
             SetAccountFromDB();
+            SetAllItemMainFromDB();
+            SetAllItemOptionFromDB();
+            SetAllMenuMainFromDB();
+            SetAllMenuOptionFromDB();
             SetAssignedItemMainFromDB();
             SetAssignedItemOptionFromDB();
             SetAssignedMenuOptionFromDB();
@@ -53,6 +60,10 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         public void SaveSessionToDB()
         {
             SaveAccountToDB();
+            SaveAllItemMainToDB();
+            SaveAllItemOptionToDB();
+            SaveAllMenuMainToDB();
+            SaveAllMenuOptionToDB();
             SaveAssignedItemMainToDB();
             SaveAssignedItemOptionToDB();
             SaveAssignedMenuOptionToDB();
@@ -77,12 +88,20 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         }
 
         protected abstract void SetAccountFromDB();
+        protected abstract void SetAllItemMainFromDB();
+        protected abstract void SetAllItemOptionFromDB();
+        protected abstract void SetAllMenuMainFromDB();
+        protected abstract void SetAllMenuOptionFromDB();
         protected abstract void SetAssignedItemMainFromDB();
         protected abstract void SetAssignedItemOptionFromDB();
         protected abstract void SetAssignedMenuOptionFromDB();
         protected abstract void SetTopGroupFromDB();
         protected abstract void SetSettingsFromDB();
         protected abstract void SaveAccountToDB();
+        protected abstract void SaveAllItemMainToDB();
+        protected abstract void SaveAllItemOptionToDB();
+        protected abstract void SaveAllMenuMainToDB();
+        protected abstract void SaveAllMenuOptionToDB();
         protected abstract void SaveAssignedItemMainToDB();
         protected abstract void SaveAssignedItemOptionToDB();
         protected abstract void SaveAssignedMenuOptionToDB();

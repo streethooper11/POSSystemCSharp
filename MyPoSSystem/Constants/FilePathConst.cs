@@ -13,6 +13,7 @@ namespace MyPoSSystem.Constants
 
         public const string AllItemMainPath = "DB\\AllItemMain.json";
         public const string AllItemOptionPath = "DB\\AllItemOption.json";
+        public const string AllMenuMainPath = "DB\\AllMenuMain.json";
         public const string AllMenuOptionPath = "DB\\AllMenuOption.json";
 
         public const string AssignedItemMainPath = "DB\\AssignedItemMain.json";
