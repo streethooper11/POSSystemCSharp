@@ -26,22 +26,22 @@ namespace MyPoSSystem.WholeBackend.Session
             AccountChanged = false;
         }
 
-        protected override void SetItemMainFromDB()
+        protected override void SetAssignedItemMainFromDB()
         {
-            ItemMainDictionary = (Dictionary<int, Item_Main>?)_jsonWorker.ReadDataFromDB(FilePathConst.ItemMainPath);
-            ItemMainChanged = false;
+            AssignedItemMainDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedItemMainPath);
+            AssignedItemMainChanged = false;
         }
 
-        protected override void SetItemOptionFromDB()
+        protected override void SetAssignedItemOptionFromDB()
         {
-            ItemOptionDictionary = (Dictionary<int, Item_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.ItemOptionPath); 
-            ItemOptionChanged = false;
+            AssignedItemOptionDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedItemOptionPath); 
+            AssignedItemOptionChanged = false;
         }
 
-        protected override void SetMenuOptionFromDB()
+        protected override void SetAssignedMenuOptionFromDB()
         {
-            MenuOptionDictionary = (Dictionary<int, Menu_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.MenuOptionPath);
-            MenuOptionChanged = false;
+            AssignedMenuOptionDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedMenuOptionPath);
+            AssignedMenuOptionChanged = false;
         }
 
         protected override void SetTopGroupFromDB()
@@ -64,27 +64,27 @@ namespace MyPoSSystem.WholeBackend.Session
             }
         }
 
-        protected override void SaveItemMainToDB()
+        protected override void SaveAssignedItemMainToDB()
         {
-            if (ItemMainChanged)
+            if (AssignedItemMainChanged)
             {
-                _jsonWorker.SaveDataToDBFile(FilePathConst.ItemMainPath, ItemMainDictionary);
+                _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedItemMainPath, AssignedItemMainDictionary);
             }
         }
 
-        protected override void SaveItemOptionToDB()
+        protected override void SaveAssignedItemOptionToDB()
         {
-            if (ItemOptionChanged)
+            if (AssignedItemOptionChanged)
             {
-                _jsonWorker.SaveDataToDBFile(FilePathConst.ItemOptionPath, ItemOptionDictionary);
+                _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedItemOptionPath, AssignedItemOptionDictionary);
             }
         }
 
-        protected override void SaveMenuOptionToDB()
+        protected override void SaveAssignedMenuOptionToDB()
         {
-            if (MenuOptionChanged)
+            if (AssignedMenuOptionChanged)
             {
-                _jsonWorker.SaveDataToDBFile(FilePathConst.MenuOptionPath, MenuOptionDictionary);
+                _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedMenuOptionPath, AssignedMenuOptionDictionary);
             }
         }
 

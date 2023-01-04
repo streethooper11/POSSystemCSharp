@@ -11,9 +11,13 @@ namespace MyPoSSystem.Constants
     {
         public const string AccountPath = "DB\\Account.json";
 
-        public const string ItemMainPath = "DB\\ItemMain.json";
-        public const string ItemOptionPath = "DB\\ItemOption.json";
-        public const string MenuOptionPath = "DB\\MenuOption.json";
+        public const string AllItemMainPath = "DB\\AllItemMain.json";
+        public const string AllItemOptionPath = "DB\\AllItemOption.json";
+        public const string AllMenuOptionPath = "DB\\AllMenuOption.json";
+
+        public const string AssignedItemMainPath = "DB\\AssignedItemMain.json";
+        public const string AssignedItemOptionPath = "DB\\AssignedItemOption.json";
+        public const string AssignedMenuOptionPath = "DB\\AssignedMenuOption.json";
         public const string TopGroupPath = "DB\\TopGroup.json";
 
         public const string OrderPath = "DB\\Order.json";
