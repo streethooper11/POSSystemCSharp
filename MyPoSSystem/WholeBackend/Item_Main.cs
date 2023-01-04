@@ -25,7 +25,18 @@ namespace MyPoSSystem.WholeBackend
             _optionMenu = null;
         }
 
+        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category) : base(name, price, itemTaxPercentage)
+        {
+            _category = category;
+            _optionMenu = null;
+        }
+
         public Item_Main(string name, decimal price, string category, Menu_Option optionMenu) : this(name, price, category)
+        {
+            _optionMenu = optionMenu;
+        }
+
+        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category, Menu_Option optionMenu) : this(name, price, itemTaxPercentage, category)
         {
             _optionMenu = optionMenu;
         }

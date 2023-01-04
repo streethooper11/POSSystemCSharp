@@ -14,5 +14,9 @@ namespace MyPoSSystem.WholeBackend
         public Item_Option(string name, decimal price) : base(name, price)
         {
         }
+
+        public Item_Option(string name, decimal price, decimal itemTaxPercentage) : base(name, price, itemTaxPercentage)
+        {
+        }
     }
 }

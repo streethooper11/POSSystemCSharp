@@ -22,7 +22,7 @@ namespace MyPoSSystem.WholeBackend.Session
 
         protected override void SetAccountFromDB()
         {
-           AccountDictionary = (Dictionary<int, Account>?)_jsonWorker.ReadDataFromDB(FilePathConst.AccountPath);
+            AccountDictionary = (Dictionary<int, Account>?)_jsonWorker.ReadDataFromDB(FilePathConst.AccountPath);
             AccountChanged = false;
         }
 
@@ -48,6 +48,12 @@ namespace MyPoSSystem.WholeBackend.Session
         {
             TopGroup = (TopGroup?)_jsonWorker.ReadDataFromDB(FilePathConst.TopGroupPath);
             TopGroupChanged = false;
+        }
+
+        protected override void SetSettingsFromDB()
+        {
+            Settings = (Settings?)_jsonWorker.ReadDataFromDB(FilePathConst.SettingsPath);
+            SettingsChanged = false;
         }
 
         protected override void SaveAccountToDB()
@@ -87,6 +93,14 @@ namespace MyPoSSystem.WholeBackend.Session
             if (TopGroupChanged)
             {
                 _jsonWorker.SaveDataToDBFile(FilePathConst.TopGroupPath, TopGroup);
+            }
+        }
+
+        protected override void SaveSettingsToDB()
+        {
+            if (SettingsChanged)
+            {
+                _jsonWorker.SaveDataToDBFile(FilePathConst.SettingsPath, Settings);
             }
         }
     }

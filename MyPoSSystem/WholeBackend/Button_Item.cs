@@ -15,12 +15,11 @@ namespace MyPoSSystem.WholeBackend
     // A button with Id
     public class Button_Item : Button
     {
-        private int _id;
-        public int Id => _id;
+        public int Id { get; }
 
         public Button_Item(int id) : base()
         {
-            _id = id;
+            Id = id;
         }
     }
 }

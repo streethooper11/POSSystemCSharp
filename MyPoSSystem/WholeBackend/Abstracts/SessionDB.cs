@@ -28,6 +28,10 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected TopGroup? TopGroup;
         protected bool TopGroupChanged;
 
+        protected Settings? Settings;
+        protected bool SettingsChanged;
+
+
         public void SetSessionFromDB()
         {
             SetAccountFromDB();
@@ -35,6 +39,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             SetItemOptionFromDB();
             SetMenuOptionFromDB();
             SetTopGroupFromDB();
+            SetSettingsFromDB();
         }
 
         public void SaveSessionToDB()
@@ -44,6 +49,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             SaveItemOptionToDB();
             SaveMenuOptionToDB();
             SaveTopGroupToDB();
+            SaveSettingsToDB();
         }
 
         protected abstract void SetAccountFromDB();
@@ -51,10 +57,12 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected abstract void SetItemOptionFromDB();
         protected abstract void SetMenuOptionFromDB();
         protected abstract void SetTopGroupFromDB();
+        protected abstract void SetSettingsFromDB();
         protected abstract void SaveAccountToDB();
         protected abstract void SaveItemMainToDB();
         protected abstract void SaveItemOptionToDB();
         protected abstract void SaveMenuOptionToDB();
         protected abstract void SaveTopGroupToDB();
+        protected abstract void SaveSettingsToDB();
     }
 }

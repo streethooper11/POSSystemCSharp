@@ -18,6 +18,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
     {
         private string _name;
         private decimal _price;
+        private decimal _itemTaxPercentage;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -51,6 +52,11 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         {
             _name = name;
             _price = price;
+        }
+
+        protected Item(string name, decimal price, decimal itemTaxPercentage) : this(name, price)
+        {
+            _itemTaxPercentage = itemTaxPercentage;
         }
 
         // Create the OnPropertyChanged method to raise the event

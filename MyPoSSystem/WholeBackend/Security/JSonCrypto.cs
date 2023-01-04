@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using MyPoSSystem.Constants;
+
 namespace MyPoSSystem.WholeBackend.Security
 {
     public class JSonCrypto
@@ -86,15 +88,7 @@ namespace MyPoSSystem.WholeBackend.Security
 
         private static byte[] CreateInitialKey()
         {
-            string initialKey = "usf4";
-            initialKey += "pstreet11";
-            initialKey += "gen5fst.mkh";
-            initialKey += "xtatsu5f";
-            initialKey += "goukene";
-
-            initialKey = initialKey.Substring(0, 4) + initialKey.Substring(13, 11) + initialKey.Substring(4, 9) + initialKey.Substring(32) + initialKey.Substring(24, 8);
-
-            return CryptoFunctions.GetByteArrayFromString(initialKey);
+            return CryptoFunctions.GetByteArrayFromString(SettingConst.CreateKey());
         }
     }
 }

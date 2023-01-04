@@ -12,7 +12,7 @@ namespace MyPoSSystem.WholeBackend
 {
     public class Account_NonAdmin : Account
     {
-        public Account_NonAdmin(string name, int pin) : base(name, pin)
+        public Account_NonAdmin(string name, string password) : base(name, password)
         {
         }
     }

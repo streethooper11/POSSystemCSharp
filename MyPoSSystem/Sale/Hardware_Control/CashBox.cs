@@ -11,21 +11,21 @@ namespace MyPoSSystem.Sale.Hardware_Control
 {
     public class CashBox : Hardware
     {
-        private static bool IsOpen = false;
+        private bool s_isOpen = false;
 
-        public static void OpenCashBox()
+        public void OpenCashBox()
         {
-            if (!IsOpen)
+            if (!s_isOpen)
             {
-                IsOpen = true;
+                s_isOpen = true;
             }
         }
 
-        public static void CloseCashBox()
+        public void CloseCashBox()
         {
-            if (IsOpen)
+            if (s_isOpen)
             {
-                IsOpen = false;
+                s_isOpen = false;
             }
         }
 

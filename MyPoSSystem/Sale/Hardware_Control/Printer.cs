@@ -11,7 +11,7 @@ namespace MyPoSSystem.Sale.Hardware_Control
 {
     public class Printer : Hardware
     {
-        private static void PrintString(string text)
+        private void PrintString(string text)
         {
             foreach (var character in text)
             {
@@ -19,7 +19,7 @@ namespace MyPoSSystem.Sale.Hardware_Control
             }
         }
 
-        private static void PrintCharacter(char character)
+        private void PrintCharacter(char character)
         {
         }
 
