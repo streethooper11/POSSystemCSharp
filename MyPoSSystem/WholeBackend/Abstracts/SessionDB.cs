@@ -23,7 +23,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         public Dictionary<int,int>? AssignedItemOptionDictionary { get; protected set; } // key is button ID, value is Item_Option ID
         public Dictionary<int,int>? AssignedMenuMainDictionary { get; protected set; } // key is button ID, value is Menu_Main ID
         public Dictionary<int,int>? AssignedMenuOptionDictionary { get; protected set; } // key is button ID, value is Menu_Option ID
-        public Settings? Settings;
+        public Settings? Settings { get; protected set; }
 
         public void SetSessionFromDB()
         {
