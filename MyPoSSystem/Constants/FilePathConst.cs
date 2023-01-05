@@ -9,21 +9,21 @@ namespace MyPoSSystem.Constants
 {
     public class FilePathConst
     {
-        public const string AccountPath = "DB\\Account.json";
+        public const string AccountPath = "DB\\Account.db";
 
-        public const string AllItemMainPath = "DB\\AllItemMain.json";
-        public const string AllItemOptionPath = "DB\\AllItemOption.json";
-        public const string AllMenuMainPath = "DB\\AllMenuMain.json";
-        public const string AllMenuOptionPath = "DB\\AllMenuOption.json";
+        public const string AllItemMainPath = "DB\\AllItemMain.db";
+        public const string AllItemOptionPath = "DB\\AllItemOption.db";
+        public const string AllMenuMainPath = "DB\\AllMenuMain.db";
+        public const string AllMenuOptionPath = "DB\\AllMenuOption.db";
 
-        public const string AssignedItemMainPath = "DB\\AssignedItemMain.json";
-        public const string AssignedItemOptionPath = "DB\\AssignedItemOption.json";
-        public const string AssignedMenuOptionPath = "DB\\AssignedMenuOption.json";
-        public const string TopGroupPath = "DB\\TopGroup.json";
+        public const string AssignedItemMainPath = "DB\\AssignedItemMain.db";
+        public const string AssignedItemOptionPath = "DB\\AssignedItemOption.db";
+        public const string AssignedMenuMainPath = "DB\\AssignedMenuMain.db";
+        public const string AssignedMenuOptionPath = "DB\\AssignedMenuOption.db";
 
-        public const string OrderPath = "DB\\Order.json";
+        public const string OrderPath = "DB\\Order.db";
 
-        public const string SettingsPath = "DB\\Settings.json";
+        public const string SettingsPath = "DB\\Settings.db";
 
         public const string BackupExt = ".bak";
     }

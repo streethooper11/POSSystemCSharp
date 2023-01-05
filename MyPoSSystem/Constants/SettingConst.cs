@@ -20,6 +20,8 @@ namespace MyPoSSystem.Constants
         public const string Printer = "printer";
         public const string Tax = "tax";
 
+        public const int RootAccountButtonId = -1;
+
         public static string CreateKey()
         {
             return key1 + key3 + key5 + key2 + key4;

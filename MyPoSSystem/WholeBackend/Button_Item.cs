@@ -13,11 +13,11 @@ using System.Xml.Linq;
 namespace MyPoSSystem.WholeBackend
 {
     // A button with Id
-    public class Button_Item : Button
+    public class ButtonWithId : Button
     {
         public int Id { get; }
 
-        public Button_Item(int id) : base()
+        public ButtonWithId(int id) : base()
         {
             Id = id;
         }

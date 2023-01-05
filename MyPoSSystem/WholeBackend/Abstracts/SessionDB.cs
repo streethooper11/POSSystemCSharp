@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,35 +14,16 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 {
     public abstract class SessionDB
     {
-        protected Dictionary<int, Account>? AccountDictionary; // key is button ID
-        protected bool AccountChanged;
-
-        protected Dictionary<int, Item_Main>? AllItemMainDictionary; // key is Item_Main ID
-        protected bool AllItemMainChanged;
-
-        protected Dictionary<int, Item_Option>? AllItemOptionDictionary; // key is Item_Option ID
-        protected bool AllItemOptionChanged;
-
-        protected Dictionary<int, Menu_Main>? AllMenuMainDictionary; // key is Menu_Main ID
-        protected bool AllMenuMainChanged;
-
-        protected Dictionary<int, Menu_Option>? AllMenuOptionDictionary; // key is Menu_Option ID
-        protected bool AllMenuOptionChanged;
-
-        protected Dictionary<int, int>? AssignedItemMainDictionary; // key is button ID, value is Item_Main ID
-        protected bool AssignedItemMainChanged;
-
-        protected Dictionary<int, int>? AssignedItemOptionDictionary; // key is button ID, value is Item_Option ID
-        protected bool AssignedItemOptionChanged;
-
-        protected Dictionary<int, int>? AssignedMenuOptionDictionary; // key is button ID, value is Menu_Option ID
-        protected bool AssignedMenuOptionChanged;
-
-        protected TopGroup? TopGroup;
-        protected bool TopGroupChanged;
-
-        protected Settings? Settings;
-        protected bool SettingsChanged;
+        public Dictionary<int, Account>? AccountDictionary { get; protected set; } // key is button ID, which is also account ID; Unassign is Deletion of account
+        public Dictionary<int,Item_Main>? AllItemMainDictionary { get; protected set; } // key is Item_Main ID
+        public Dictionary<int,Item_Option>? AllItemOptionDictionary { get; protected set; } // key is Item_Option ID
+        public Dictionary<int,Menu_Main>? AllMenuMainDictionary { get; protected set; } // key is Menu_Main ID
+        public Dictionary<int,Menu_Option>? AllMenuOptionDictionary { get; protected set; } // key is Menu_Option ID
+        public Dictionary<int,int>? AssignedItemMainDictionary { get; protected set; } // key is button ID, value is Item_Main ID
+        public Dictionary<int,int>? AssignedItemOptionDictionary { get; protected set; } // key is button ID, value is Item_Option ID
+        public Dictionary<int,int>? AssignedMenuMainDictionary { get; protected set; } // key is button ID, value is Menu_Main ID
+        public Dictionary<int,int>? AssignedMenuOptionDictionary { get; protected set; } // key is button ID, value is Menu_Option ID
+        public Settings? Settings;
 
         public void SetSessionFromDB()
         {
@@ -52,8 +34,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             SetAllMenuOptionFromDB();
             SetAssignedItemMainFromDB();
             SetAssignedItemOptionFromDB();
+            SetAssignedMenuMainFromDB();
             SetAssignedMenuOptionFromDB();
-            SetTopGroupFromDB();
             SetSettingsFromDB();
         }
 
@@ -66,25 +48,77 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             SaveAllMenuOptionToDB();
             SaveAssignedItemMainToDB();
             SaveAssignedItemOptionToDB();
+            SaveAssignedMenuMainToDB();
             SaveAssignedMenuOptionToDB();
-            SaveTopGroupToDB();
             SaveSettingsToDB();
         }
 
-        public void AddAccount(int buttonId, Account account)
+        public void Add<V>(Dictionary<int,V> dictionary, V value)
         {
-            AccountDictionary[buttonId] = account;
+            dictionary[dictionary.Count] = value;
         }
 
-        public void RemoveAccount(int buttonId)
+        public void Add<V>(Dictionary<int, V> dictionary, int key, V value)
         {
-            AccountDictionary.Remove(buttonId);
+            dictionary[key] = value;
         }
 
-        public void MoveAccount(int oldButtonId, int newButtonId, Account account)
+        public void Delete<V>(Dictionary<int, V> dictionary, int key)
         {
-            RemoveAccount(oldButtonId);
-            AddAccount(newButtonId, account);
+            dictionary.Remove(key);
+        }
+
+        // delete all matching values then delete
+        public void Delete<V>(Dictionary<int,V> allDict, Dictionary<int,int> assignDict, int key)
+        {
+            foreach(var kvp in assignDict)
+            {
+                if (kvp.Value == key)
+                {
+                    Delete(assignDict, key);
+                }
+            }
+
+            allDict.Remove(key);
+            RearrangeId(allDict);
+        }
+
+        public void Move<V>(Dictionary<int,V> dictionary, int oldKey, int newKey, V value)
+        {
+            Delete(dictionary, oldKey);
+            Add(dictionary, newKey, value);
+        }
+
+        private void RearrangeId<V>(Dictionary<int, V> dictionary)
+        {
+            int i = 0;
+            int noKeysChecked = 0;
+            int dictSize = dictionary.Count;
+
+            // find the first slot with a key that doesn't exist
+            while (noKeysChecked < dictSize)
+            {
+                if (dictionary.ContainsKey(i))
+                {
+                    noKeysChecked++;
+                    i++;
+                }
+            }
+
+            // traverse to find an existing key and copy the value over
+            while (noKeysChecked < dictSize)
+            {
+                while (!dictionary.ContainsKey(i))
+                {
+                    i++;
+                }
+
+                dictionary[noKeysChecked] = dictionary[i];
+                dictionary.Remove(i);
+
+                noKeysChecked++;
+                i++;
+            }
         }
 
         protected abstract void SetAccountFromDB();
@@ -94,8 +128,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected abstract void SetAllMenuOptionFromDB();
         protected abstract void SetAssignedItemMainFromDB();
         protected abstract void SetAssignedItemOptionFromDB();
+        protected abstract void SetAssignedMenuMainFromDB();
         protected abstract void SetAssignedMenuOptionFromDB();
-        protected abstract void SetTopGroupFromDB();
         protected abstract void SetSettingsFromDB();
         protected abstract void SaveAccountToDB();
         protected abstract void SaveAllItemMainToDB();
@@ -104,8 +138,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected abstract void SaveAllMenuOptionToDB();
         protected abstract void SaveAssignedItemMainToDB();
         protected abstract void SaveAssignedItemOptionToDB();
+        protected abstract void SaveAssignedMenuMainToDB();
         protected abstract void SaveAssignedMenuOptionToDB();
-        protected abstract void SaveTopGroupToDB();
         protected abstract void SaveSettingsToDB();
     }
 }
