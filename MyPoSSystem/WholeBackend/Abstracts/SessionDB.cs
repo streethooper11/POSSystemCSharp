@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Printing;
@@ -51,6 +52,11 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             Settings = SetDataFromDB<Settings>(FilePathConst.SettingsPath);
 
             // work on orders later
+
+            foreach (var assign in AssignedItemMain)
+            {
+                Debug.WriteLine("Value: " + assign);
+            }
         }
 
         protected void SaveSessionToDB()
@@ -70,7 +76,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             SaveDataToDB(FilePathConst.SettingsPath, Settings);
         }
 
-        // Add Item
+        // Add entity
         public void Add<V>(Dictionary<int, V> dictionary, V value)
         {
             dictionary[dictionary.Count] = value;
@@ -82,7 +88,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             array[index] = element;
         }
 
-        // usually used when deleting an item; delete all relationships then delete the item itself; rearrange after
+        // usually used when deleting an entity; delete all relationships then delete the item itself; rearrange after
         public void Delete<V>(Dictionary<int, V> allDict, int[] assignArray, int key)
         {
             // delete all assigned relationship
@@ -124,7 +130,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             Delete(array, oldKey);
         }
 
-        private void RearrangeId<V>(Dictionary<int,V> allDict, int[] assignArray, int index)
+        private void RearrangeId<V>(Dictionary<int, V> allDict, int[] assignArray, int index)
         {
             int dictSize = allDict.Count;
 
