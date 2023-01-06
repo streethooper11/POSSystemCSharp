@@ -36,19 +36,19 @@ namespace MyPoSSystem.WholeBackend.Abstracts
                 Directory.CreateDirectory(FilePathConst.DBFolder);
             }
 
-            SetDataFromDB(FilePathConst.AllItemMainPath, AllItemMain);
-            SetDataFromDB(FilePathConst.AllItemOptionPath, AllItemOption);
-            SetDataFromDB(FilePathConst.AllMenuMainPath, AllMenuMain);
-            SetDataFromDB(FilePathConst.AllMenuOptionPath, AllMenuOption);
+            AllItemMain = SetDataFromDB(FilePathConst.AllItemMainPath);
+            AllItemOption = SetDataFromDB(FilePathConst.AllItemOptionPath);
+            AllMenuMain = SetDataFromDB(FilePathConst.AllMenuMainPath);
+            AllMenuOption = SetDataFromDB(FilePathConst.AllMenuOptionPath);
 
-            SetDataFromDB(FilePathConst.AccountPath, Accounts, SettingConst.MaxAccountButtonNo);
+            Accounts = SetDataFromDB(FilePathConst.AccountPath, SettingConst.MaxAccountButtonNo);
 
-            SetDataFromDB(FilePathConst.AssignedItemMainPath, AssignedItemMain, SettingConst.MaxItemMainButtonNo);
-            SetDataFromDB(FilePathConst.AssignedItemOptionPath, AssignedItemOption, SettingConst.MaxItemOptionButtonNo);
-            SetDataFromDB(FilePathConst.AssignedMenuMainPath, AssignedMenuMain, SettingConst.MaxMenuMainButtonNo);
-            SetDataFromDB(FilePathConst.AssignedMenuOptionPath, AssignedMenuOption, SettingConst.MaxMenuOptionButtonNo);
+            AssignedItemMain = SetDataFromDB(FilePathConst.AssignedItemMainPath, SettingConst.MaxItemMainButtonNo);
+            AssignedItemOption = SetDataFromDB(FilePathConst.AssignedItemOptionPath, SettingConst.MaxItemOptionButtonNo);
+            AssignedMenuMain = SetDataFromDB(FilePathConst.AssignedMenuMainPath, SettingConst.MaxMenuMainButtonNo);
+            AssignedMenuOption = SetDataFromDB(FilePathConst.AssignedMenuOptionPath, SettingConst.MaxMenuOptionButtonNo);
 
-            SetDataFromDB(FilePathConst.SettingsPath, Settings);
+            Settings = SetDataFromDB(FilePathConst.SettingsPath);
 
             // work on orders later
         }
@@ -145,10 +145,9 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             }
         }
 
-        protected abstract void SetDataFromDB<V>(string filePath, Dictionary<int, V>? dictionary);
-        protected abstract void SetDataFromDB<T>(string filePath, T[]? array, int length) where T : class;
-        protected abstract void SetDataFromDB(string filePath, int[]? array, int length);
-        protected abstract void SetDataFromDB(string filePath, Settings? obj);
+        protected abstract T SetDataFromDB<T>(string filePath) where T : new();
+        protected abstract T[] SetDataFromDB<T>(string filePath, int length) where T : class;
+        protected abstract int[] SetDataFromDB(string filePath, int length);
         protected abstract void SaveDataToDB<T>(string filePath, T obj);
     }
 }

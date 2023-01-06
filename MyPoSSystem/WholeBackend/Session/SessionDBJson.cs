@@ -23,61 +23,44 @@ namespace MyPoSSystem.WholeBackend.Session
             SetSessionFromDB();
         }
 
-        protected override void SetDataFromDB<V>(string filePath, Dictionary<int, V> dictionary)
+        protected override T SetDataFromDB<T>(string filePath)
         {
             if (File.Exists(filePath))
             {
-                dictionary = _jsonWorker.ReadDataFromDB<Dictionary<int, V>>(filePath);
+                return _jsonWorker.ReadDataFromDB<T>(filePath);
             }
-            else
-            {
-                File.Create(filePath).Close();
-                dictionary = new Dictionary<int, V>();
-                SaveDataToDB(filePath, dictionary);
-            }
+
+            File.Create(filePath).Close();
+            return new T();
         }
 
-        protected override void SetDataFromDB<T>(string filePath, T[]? array, int length)
+        protected override T[] SetDataFromDB<T>(string filePath, int length)
         {
             if (File.Exists(filePath))
             {
-                array = _jsonWorker.ReadDataFromDB<T>(filePath, length);
+                return _jsonWorker.ReadDataFromDB<T>(filePath, length);
             }
-            else
-            {
-                File.Create(filePath).Close();
-                array = new T[length];
-                SaveDataToDB(filePath, array);
-            }
+
+            File.Create(filePath).Close();
+            T[] array = new T[length];
+            SaveDataToDB(filePath, array);
+
+            return array;
         }
 
-        protected override void SetDataFromDB(string filePath, int[]? array, int length)
+        protected override int[] SetDataFromDB(string filePath, int length)
         {
             if (File.Exists(filePath))
             {
-                array = _jsonWorker.ReadDataFromDB<int>(filePath, length);
+                return _jsonWorker.ReadDataFromDB<int>(filePath, length);
             }
-            else
-            {
-                File.Create(filePath).Close();
-                array = new int[length];
-                Array.Fill(array, SettingConst.NoAssignedEntityId);
-                SaveDataToDB(filePath, array);
-            }
-        }
 
-        protected override void SetDataFromDB(string filePath, Settings? obj)
-        {
-            if (File.Exists(filePath))
-            {
-                obj = _jsonWorker.ReadDataFromDB<Settings>(filePath);
-            }
-            else
-            {
-                File.Create(filePath).Close();
-                obj = new Settings();
-                SaveDataToDB(filePath, obj);
-            }
+            File.Create(filePath).Close();
+            int[] array = new int[length];
+            Array.Fill(array, SettingConst.NoAssignedEntityId);
+            SaveDataToDB(filePath, array);
+
+            return array;
         }
 
         protected override void SaveDataToDB<T>(string filePath, T obj)
