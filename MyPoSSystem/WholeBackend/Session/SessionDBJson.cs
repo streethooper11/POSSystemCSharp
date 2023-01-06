@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
 using MyPoSSystem.WholeBackend.Abstracts;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MyPoSSystem.WholeBackend.Session
 {
@@ -34,7 +33,7 @@ namespace MyPoSSystem.WholeBackend.Session
             return new T();
         }
 
-        protected override T[] SetDataFromDB<T>(string filePath, int length)
+        protected override ObservableCollection<T> SetDataFromDB<T>(string filePath, int length)
         {
             if (File.Exists(filePath))
             {
@@ -42,13 +41,18 @@ namespace MyPoSSystem.WholeBackend.Session
             }
 
             File.Create(filePath).Close();
-            T[] array = new T[length];
-            SaveDataToDB(filePath, array);
+            ObservableCollection<T> col = new ObservableCollection<T>();
 
-            return array;
+            for (int i = 0; i < length; i++)
+            {
+                col.Add(null);
+            }
+            SaveDataToDB(filePath, col);
+
+            return col;
         }
 
-        protected override int[] SetDataFromDB(string filePath, int length)
+        protected override ObservableCollection<int> SetDataFromDB(string filePath, int length)
         {
             if (File.Exists(filePath))
             {
@@ -56,11 +60,15 @@ namespace MyPoSSystem.WholeBackend.Session
             }
 
             File.Create(filePath).Close();
-            int[] array = new int[length];
-            Array.Fill(array, SettingConst.NoAssignedEntityId);
-            SaveDataToDB(filePath, array);
+            ObservableCollection<int> col = new ObservableCollection<int>();
 
-            return array;
+            for (int i = 0; i < length; i++)
+            {
+                col.Add(SettingConst.NoAssignedEntityId);
+            }
+            SaveDataToDB(filePath, col);
+
+            return col;
         }
 
         protected override void SaveDataToDB<T>(string filePath, T obj)

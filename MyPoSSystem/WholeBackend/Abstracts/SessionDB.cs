@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -23,11 +24,11 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         public Dictionary<int, Item_Option>? AllItemOption { get; protected set; } // key is Item_Option ID
         public Dictionary<int, Menu_Main>? AllMenuMain { get; protected set; } // key is Menu_Main ID
         public Dictionary<int, Menu_Option>? AllMenuOption { get; protected set; } // key is Menu_Option ID
-        public Account[]? Accounts { get; protected set; } // index is button ID, which is also account ID; Unassign is Deletion of account
-        public int[]? AssignedItemMain { get; protected set; } // index is button ID, element is Item_Main ID
-        public int[]? AssignedItemOption { get; protected set; } // index is button ID, element is Item_Option ID
-        public int[]? AssignedMenuMain { get; protected set; } // index is button ID, element is Menu_Main ID
-        public int[]? AssignedMenuOption { get; protected set; } // index is button ID, element is Menu_Option ID
+        public ObservableCollection<Account> Accounts { get; protected set; } // index is button ID, which is also account ID; Unassign is Deletion of account
+        public ObservableCollection<int> AssignedItemMain { get; protected set; } // index is button ID, element is Item_Main ID
+        public ObservableCollection<int> AssignedItemOption { get; protected set; } // index is button ID, element is Item_Option ID
+        public ObservableCollection<int> AssignedMenuMain { get; protected set; } // index is button ID, element is Menu_Main ID
+        public ObservableCollection<int> AssignedMenuOption { get; protected set; } // index is button ID, element is Menu_Option ID
         public Settings? Settings { get; protected set; }
 
         protected void SetSessionFromDB()
@@ -52,11 +53,6 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             Settings = SetDataFromDB<Settings>(FilePathConst.SettingsPath);
 
             // work on orders later
-
-            foreach (var assign in AssignedItemMain)
-            {
-                Debug.WriteLine("Value: " + assign);
-            }
         }
 
         protected void SaveSessionToDB()
@@ -152,8 +148,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         }
 
         protected abstract T SetDataFromDB<T>(string filePath) where T : new();
-        protected abstract T[] SetDataFromDB<T>(string filePath, int length) where T : class;
-        protected abstract int[] SetDataFromDB(string filePath, int length);
+        protected abstract ObservableCollection<T> SetDataFromDB<T>(string filePath, int length) where T : class?;
+        protected abstract ObservableCollection<int> SetDataFromDB(string filePath, int length);
         protected abstract void SaveDataToDB<T>(string filePath, T obj);
     }
 }

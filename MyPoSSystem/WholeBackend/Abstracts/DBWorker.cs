@@ -1,6 +1,7 @@
 ﻿using MyPoSSystem.WholeBackend.Session;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,6 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 
         public abstract void SaveDataToDBFile<T>(string filePath, T obj);
         public abstract T ReadDataFromDB<T>(string filePath) where T : new();
-        public abstract T[] ReadDataFromDB<T>(string filePath, int length);
+        public abstract ObservableCollection<T> ReadDataFromDB<T>(string filePath, int length);
     }
 }
