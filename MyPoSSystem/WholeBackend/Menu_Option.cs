@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using MyPoSSystem.WholeBackend.DataStruct;
+
 namespace MyPoSSystem.WholeBackend.Abstracts
 {
     // A menu that contains a list of option items
@@ -15,7 +17,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         {
         }
 
-        public Menu_Option(string name, Dictionary<int, int> items) : base(name, items)
+        public Menu_Option(string name, MyObservableCollection<MyInt> items) : base(name, items)
         {
         }
     }

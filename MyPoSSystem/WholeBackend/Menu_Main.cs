@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyPoSSystem.WholeBackend.DataStruct;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         {
         }
 
-        public Menu_Main(string name, Dictionary<int, int> items) : base(name, items)
+        public Menu_Main(string name, MyObservableCollection<MyInt> items) : base(name, items)
         {
         }
     }

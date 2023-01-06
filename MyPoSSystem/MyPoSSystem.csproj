@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstracts\" />
-    <Folder Include="Backend_Logic\" />
     <Folder Include="Generic_Json\" />
     <Folder Include="Generic_Security\" />
     <Folder Include="Manage\" />

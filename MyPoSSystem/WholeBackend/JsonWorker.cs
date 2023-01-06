@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using MyPoSSystem.WholeBackend.Abstracts;
+using MyPoSSystem.WholeBackend.DataStruct;
 using MyPoSSystem.WholeBackend.Security;
 using MyPoSSystem.WholeBackend.Session;
 
@@ -44,16 +46,16 @@ namespace MyPoSSystem.WholeBackend
             return JsonSerializer.Deserialize<T>(JSonCrypto.DecryptJson(json));
         }
 
-        public override ObservableCollection<T> ReadDataFromDB<T>(string filePath, int length)
+        public override MyObservableCollection<T> ReadDataFromDB<T>(string filePath, int length)
         {
             byte[] json = File.ReadAllBytes(filePath);
 
             if (json.Length == 0)
             {
-                return new ObservableCollection<T>();
+                return new MyObservableCollection<T>();
             }
 
-            return JsonSerializer.Deserialize<ObservableCollection<T>>(JSonCrypto.DecryptJson(json));
+            return JsonSerializer.Deserialize<MyObservableCollection<T>>(JSonCrypto.DecryptJson(json));
         }
     }
 }

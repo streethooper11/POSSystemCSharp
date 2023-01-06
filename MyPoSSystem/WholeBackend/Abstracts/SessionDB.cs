@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MyPoSSystem.Constants;
+using MyPoSSystem.WholeBackend.DataStruct;
 using MyPoSSystem.WholeBackend.Security;
 using MyPoSSystem.WholeBackend.Session;
 
@@ -24,11 +25,11 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         public Dictionary<int, Item_Option>? AllItemOption { get; protected set; } // key is Item_Option ID
         public Dictionary<int, Menu_Main>? AllMenuMain { get; protected set; } // key is Menu_Main ID
         public Dictionary<int, Menu_Option>? AllMenuOption { get; protected set; } // key is Menu_Option ID
-        public ObservableCollection<Account> Accounts { get; protected set; } // index is button ID, which is also account ID; Unassign is Deletion of account
-        public ObservableCollection<int> AssignedItemMain { get; protected set; } // index is button ID, element is Item_Main ID
-        public ObservableCollection<int> AssignedItemOption { get; protected set; } // index is button ID, element is Item_Option ID
-        public ObservableCollection<int> AssignedMenuMain { get; protected set; } // index is button ID, element is Menu_Main ID
-        public ObservableCollection<int> AssignedMenuOption { get; protected set; } // index is button ID, element is Menu_Option ID
+        public MyObservableCollection<Account> Accounts { get; protected set; } // index is button ID, which is also account ID; Unassign is Deletion of account
+        public MyObservableCollection<MyInt> AssignedItemMain { get; protected set; } // index is button ID, element is Item_Main ID
+        public MyObservableCollection<MyInt> AssignedItemOption { get; protected set; } // index is button ID, element is Item_Option ID
+        public MyObservableCollection<MyInt> AssignedMenuMain { get; protected set; } // index is button ID, element is Menu_Main ID
+        public MyObservableCollection<MyInt> AssignedMenuOption { get; protected set; } // index is button ID, element is Menu_Option ID
         public Settings? Settings { get; protected set; }
 
         protected void SetSessionFromDB()
@@ -148,8 +149,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         }
 
         protected abstract T SetDataFromDB<T>(string filePath) where T : new();
-        protected abstract ObservableCollection<T> SetDataFromDB<T>(string filePath, int length) where T : class?;
-        protected abstract ObservableCollection<int> SetDataFromDB(string filePath, int length);
+        protected abstract MyObservableCollection<Account> SetDataFromDB<T>(string filePath, int length);
+        protected abstract MyObservableCollection<MyInt> SetDataFromDB(string filePath, int length);
         protected abstract void SaveDataToDB<T>(string filePath, T obj);
     }
 }

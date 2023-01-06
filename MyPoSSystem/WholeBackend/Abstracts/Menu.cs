@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MyPoSSystem.Constants;
+using MyPoSSystem.WholeBackend.DataStruct;
 
 namespace MyPoSSystem.WholeBackend.Abstracts
 {
@@ -14,7 +17,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
     public abstract class Menu : INotifyPropertyChanged
     {
         private string _name;
-        private Dictionary<int, int> _items; // key is button ID, value is item ID
+        private MyObservableCollection<MyInt> _items; // item ID
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -31,7 +34,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             }
         }
 
-        public Dictionary<int, int> Items
+        public MyObservableCollection<MyInt> Items
         {
             get { return _items; }
             set
@@ -47,10 +50,10 @@ namespace MyPoSSystem.WholeBackend.Abstracts
         protected Menu(string name)
         {
             _name = name;
-            _items = new Dictionary<int, int>();
+            _items = new MyObservableCollection<MyInt>();
         }
 
-        protected Menu(string name, Dictionary<int, int> items)
+        protected Menu(string name, MyObservableCollection<MyInt> items)
         {
             _name = name;
             _items = items;
@@ -63,14 +66,14 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public void AddItemToGroup(int buttonId, int itemId)
+        public void AddItemToGroup(int buttonId, MyInt itemId)
         {
             Items[buttonId] = itemId;
         }
 
         public void DeleteItemFromGroup(int buttonId)
         {
-            Items.Remove(buttonId);
+            Items[buttonId] = SettingConst.NoAssignedEntityId;
         }
 
         public void ChangeMenuName(string name)
