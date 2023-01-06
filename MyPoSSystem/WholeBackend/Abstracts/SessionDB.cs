@@ -36,19 +36,19 @@ namespace MyPoSSystem.WholeBackend.Abstracts
                 Directory.CreateDirectory(FilePathConst.DBFolder);
             }
 
-            AllItemMain = SetDataFromDB(FilePathConst.AllItemMainPath);
-            AllItemOption = SetDataFromDB(FilePathConst.AllItemOptionPath);
-            AllMenuMain = SetDataFromDB(FilePathConst.AllMenuMainPath);
-            AllMenuOption = SetDataFromDB(FilePathConst.AllMenuOptionPath);
+            AllItemMain = SetDataFromDB<Dictionary<int, Item_Main>>(FilePathConst.AllItemMainPath);
+            AllItemOption = SetDataFromDB<Dictionary<int, Item_Option>>(FilePathConst.AllItemOptionPath);
+            AllMenuMain = SetDataFromDB<Dictionary<int, Menu_Main>>(FilePathConst.AllMenuMainPath);
+            AllMenuOption = SetDataFromDB<Dictionary<int, Menu_Option>>(FilePathConst.AllMenuOptionPath);
 
-            Accounts = SetDataFromDB(FilePathConst.AccountPath, SettingConst.MaxAccountButtonNo);
+            Accounts = SetDataFromDB<Account>(FilePathConst.AccountPath, SettingConst.MaxAccountButtonNo);
 
             AssignedItemMain = SetDataFromDB(FilePathConst.AssignedItemMainPath, SettingConst.MaxItemMainButtonNo);
             AssignedItemOption = SetDataFromDB(FilePathConst.AssignedItemOptionPath, SettingConst.MaxItemOptionButtonNo);
             AssignedMenuMain = SetDataFromDB(FilePathConst.AssignedMenuMainPath, SettingConst.MaxMenuMainButtonNo);
             AssignedMenuOption = SetDataFromDB(FilePathConst.AssignedMenuOptionPath, SettingConst.MaxMenuOptionButtonNo);
 
-            Settings = SetDataFromDB(FilePathConst.SettingsPath);
+            Settings = SetDataFromDB<Settings>(FilePathConst.SettingsPath);
 
             // work on orders later
         }
