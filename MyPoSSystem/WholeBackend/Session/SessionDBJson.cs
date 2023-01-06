@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
 using MyPoSSystem.WholeBackend.Abstracts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MyPoSSystem.WholeBackend.Session
 {
@@ -18,106 +20,69 @@ namespace MyPoSSystem.WholeBackend.Session
         public SessionDBJson() : base() 
         { 
             _jsonWorker = new JsonWorker();
+            SetSessionFromDB();
         }
 
-        protected override void SetAccountFromDB()
+        protected override void SetDataFromDB<V>(string filePath, Dictionary<int, V> dictionary)
         {
-            AccountDictionary = (Dictionary<int, Account>?)_jsonWorker.ReadDataFromDB(FilePathConst.AccountPath);
+            if (File.Exists(filePath))
+            {
+                dictionary = _jsonWorker.ReadDataFromDB<Dictionary<int, V>>(filePath);
+            }
+            else
+            {
+                File.Create(filePath).Close();
+                dictionary = new Dictionary<int, V>();
+                SaveDataToDB(filePath, dictionary);
+            }
         }
 
-        protected override void SetAllItemMainFromDB()
+        protected override void SetDataFromDB<T>(string filePath, T[]? array, int length)
         {
-            AllItemMainDictionary = (Dictionary<int, Item_Main>?)_jsonWorker.ReadDataFromDB(FilePathConst.AllItemMainPath);
+            if (File.Exists(filePath))
+            {
+                array = _jsonWorker.ReadDataFromDB<T>(filePath, length);
+            }
+            else
+            {
+                File.Create(filePath).Close();
+                array = new T[length];
+                SaveDataToDB(filePath, array);
+            }
         }
 
-        protected override void SetAllItemOptionFromDB()
+        protected override void SetDataFromDB(string filePath, int[]? array, int length)
         {
-            AllItemOptionDictionary = (Dictionary<int, Item_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.AllItemOptionPath);
+            if (File.Exists(filePath))
+            {
+                array = _jsonWorker.ReadDataFromDB<int>(filePath, length);
+            }
+            else
+            {
+                File.Create(filePath).Close();
+                array = new int[length];
+                Array.Fill(array, SettingConst.NoAssignedEntityId);
+                SaveDataToDB(filePath, array);
+            }
         }
 
-        protected override void SetAllMenuMainFromDB()
+        protected override void SetDataFromDB(string filePath, Settings? obj)
         {
-            AllMenuMainDictionary = (Dictionary<int, Menu_Main>?)_jsonWorker.ReadDataFromDB(FilePathConst.AllMenuMainPath);
+            if (File.Exists(filePath))
+            {
+                obj = _jsonWorker.ReadDataFromDB<Settings>(filePath);
+            }
+            else
+            {
+                File.Create(filePath).Close();
+                obj = new Settings();
+                SaveDataToDB(filePath, obj);
+            }
         }
 
-        protected override void SetAllMenuOptionFromDB()
+        protected override void SaveDataToDB<T>(string filePath, T obj)
         {
-            AllMenuOptionDictionary = (Dictionary<int, Menu_Option>?)_jsonWorker.ReadDataFromDB(FilePathConst.AllMenuOptionPath);
-        }
-
-        protected override void SetAssignedItemMainFromDB()
-        {
-            AssignedItemMainDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedItemMainPath);
-        }
-
-        protected override void SetAssignedItemOptionFromDB()
-        {
-            AssignedItemOptionDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedItemOptionPath);
-        }
-
-        protected override void SetAssignedMenuMainFromDB()
-        {
-            AssignedMenuMainDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedMenuMainPath);
-        }
-
-        protected override void SetAssignedMenuOptionFromDB()
-        {
-            AssignedMenuOptionDictionary = (Dictionary<int, int>?)_jsonWorker.ReadDataFromDB(FilePathConst.AssignedMenuOptionPath);
-        }
-
-        protected override void SetSettingsFromDB()
-        {
-            Settings = (Settings?)_jsonWorker.ReadDataFromDB(FilePathConst.SettingsPath);
-        }
-
-        protected override void SaveAccountToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AccountPath, AccountDictionary);
-        }
-
-        protected override void SaveAllItemMainToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AllItemMainPath, AllItemMainDictionary);
-        }
-
-        protected override void SaveAllItemOptionToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AllItemOptionPath, AllItemOptionDictionary);
-        }
-
-        protected override void SaveAllMenuMainToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AllMenuMainPath, AllMenuMainDictionary);
-        }
-
-        protected override void SaveAllMenuOptionToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AllMenuOptionPath, AllMenuOptionDictionary);
-        }
-
-        protected override void SaveAssignedItemMainToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedItemMainPath, AssignedItemMainDictionary);
-        }
-
-        protected override void SaveAssignedItemOptionToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedItemOptionPath, AssignedItemOptionDictionary);
-        }
-
-        protected override void SaveAssignedMenuMainToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedMenuMainPath, AssignedMenuMainDictionary);
-        }
-
-        protected override void SaveAssignedMenuOptionToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.AssignedMenuOptionPath, AssignedMenuOptionDictionary);
-        }
-
-        protected override void SaveSettingsToDB()
-        {
-            _jsonWorker.SaveDataToDBFile(FilePathConst.SettingsPath, Settings);
+            _jsonWorker.SaveDataToDBFile(filePath, obj);
         }
     }
 }

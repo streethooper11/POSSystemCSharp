@@ -15,18 +15,21 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using MyPoSSystem.Constants;
+using MyPoSSystem.WholeBackend.Abstracts;
+using MyPoSSystem.WholeBackend.Session;
 
 namespace MyPoSSystem
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public class MainProgram
     {
-        public MainWindow()
+        private Window _window;
+        private SessionDB _sessionDB;
+        private SessionAccount _sessionAccount;
+
+        public MainProgram(Window window)
         {
-            InitializeComponent();
-            new MainProgram(this);
+            _window = window;
+            _sessionDB = new SessionDBJson();
         }
     }
 }

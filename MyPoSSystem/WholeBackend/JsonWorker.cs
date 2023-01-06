@@ -14,7 +14,7 @@ namespace MyPoSSystem.WholeBackend
 {
     public class JsonWorker : DBWorker
     {
-        public override void SaveDataToDBFile(string filePath, object? obj)
+        public override void SaveDataToDBFile<T>(string filePath, T obj)
         {
             File.WriteAllBytes
                 (
@@ -31,16 +31,28 @@ namespace MyPoSSystem.WholeBackend
                 );
         }
 
-        public override object ReadDataFromDB(string filePath)
+        public override T ReadDataFromDB<T>(string filePath)
         {
             byte[] json = File.ReadAllBytes(filePath);
 
             if (json.Length == 0)
             {
-                return new object();
+                return new T();
             }
 
-            return JsonSerializer.Deserialize<object>(JSonCrypto.DecryptJson(json));
+            return JsonSerializer.Deserialize<T>(JSonCrypto.DecryptJson(json));
+        }
+
+        public override T[] ReadDataFromDB<T>(string filePath, int length)
+        {
+            byte[] json = File.ReadAllBytes(filePath);
+
+            if (json.Length == 0)
+            {
+                return new T[length];
+            }
+
+            return JsonSerializer.Deserialize<T[]>(JSonCrypto.DecryptJson(json));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -26,6 +27,7 @@ namespace MyPoSSystem.WholeBackend.Security
             {
                 aesAlg.Key = Key;
                 aesAlg.GenerateIV();
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 // Create an encryptor to perform the stream transform.
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -53,26 +55,33 @@ namespace MyPoSSystem.WholeBackend.Security
             return result;
         }
 
-        public static string DecryptStringFromBytes_Aes(string cipherText, byte[] Key)
+        public static string DecryptStringFromBytes_Aes(byte[] cipherBytes, byte[] Key)
         {
             // Check arguments.
-            if (cipherText == null || cipherText.Length <= 0)
+            if (cipherBytes == null || cipherBytes.Length <= 0)
                 throw new ArgumentNullException("cipherText");
             if (Key == null || Key.Length <= 0)
                 throw new ArgumentNullException("Key");
 
             // Create an Aes object
             // with the specified key and IV.
+            byte[] iv = new byte[AES_IV_SIZE];
+            Buffer.BlockCopy(cipherBytes, 0, iv, 0, AES_IV_SIZE);
+
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Key;
-                aesAlg.IV = GetByteArrayFromString(cipherText.Substring(0, AES_IV_SIZE));
+                aesAlg.IV = iv;
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 // Create a decryptor to perform the stream transform.
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
+                byte[] cipherBytesNoIV = new byte[cipherBytes.Length - AES_IV_SIZE];
+                Buffer.BlockCopy(cipherBytes, AES_IV_SIZE, cipherBytesNoIV, 0, cipherBytes.Length - AES_IV_SIZE);
+
                 // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(GetByteArrayFromString(cipherText.Substring(AES_IV_SIZE))))
+                using (MemoryStream msDecrypt = new MemoryStream(cipherBytesNoIV))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {

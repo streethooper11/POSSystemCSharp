@@ -21,7 +21,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             File.Delete(filePath);
         }
 
-        public abstract void SaveDataToDBFile(string filePath, object obj);
-        public abstract object ReadDataFromDB(string filePath);
+        public abstract void SaveDataToDBFile<T>(string filePath, T obj);
+        public abstract T ReadDataFromDB<T>(string filePath) where T : new();
+        public abstract T[] ReadDataFromDB<T>(string filePath, int length);
     }
 }

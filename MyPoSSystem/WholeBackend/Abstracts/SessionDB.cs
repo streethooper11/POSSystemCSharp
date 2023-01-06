@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using MyPoSSystem.Constants;
 using MyPoSSystem.WholeBackend.Security;
 using MyPoSSystem.WholeBackend.Session;
@@ -14,132 +18,137 @@ namespace MyPoSSystem.WholeBackend.Abstracts
 {
     public abstract class SessionDB
     {
-        public Dictionary<int, Account>? AccountDictionary { get; protected set; } // key is button ID, which is also account ID; Unassign is Deletion of account
-        public Dictionary<int,Item_Main>? AllItemMainDictionary { get; protected set; } // key is Item_Main ID
-        public Dictionary<int,Item_Option>? AllItemOptionDictionary { get; protected set; } // key is Item_Option ID
-        public Dictionary<int,Menu_Main>? AllMenuMainDictionary { get; protected set; } // key is Menu_Main ID
-        public Dictionary<int,Menu_Option>? AllMenuOptionDictionary { get; protected set; } // key is Menu_Option ID
-        public Dictionary<int,int>? AssignedItemMainDictionary { get; protected set; } // key is button ID, value is Item_Main ID
-        public Dictionary<int,int>? AssignedItemOptionDictionary { get; protected set; } // key is button ID, value is Item_Option ID
-        public Dictionary<int,int>? AssignedMenuMainDictionary { get; protected set; } // key is button ID, value is Menu_Main ID
-        public Dictionary<int,int>? AssignedMenuOptionDictionary { get; protected set; } // key is button ID, value is Menu_Option ID
+        public Dictionary<int, Item_Main>? AllItemMain { get; protected set; } // key is Item_Main ID
+        public Dictionary<int, Item_Option>? AllItemOption { get; protected set; } // key is Item_Option ID
+        public Dictionary<int, Menu_Main>? AllMenuMain { get; protected set; } // key is Menu_Main ID
+        public Dictionary<int, Menu_Option>? AllMenuOption { get; protected set; } // key is Menu_Option ID
+        public Account[]? Accounts { get; protected set; } // index is button ID, which is also account ID; Unassign is Deletion of account
+        public int[]? AssignedItemMain { get; protected set; } // index is button ID, element is Item_Main ID
+        public int[]? AssignedItemOption { get; protected set; } // index is button ID, element is Item_Option ID
+        public int[]? AssignedMenuMain { get; protected set; } // index is button ID, element is Menu_Main ID
+        public int[]? AssignedMenuOption { get; protected set; } // index is button ID, element is Menu_Option ID
         public Settings? Settings { get; protected set; }
 
-        public void SetSessionFromDB()
+        protected void SetSessionFromDB()
         {
-            SetAccountFromDB();
-            SetAllItemMainFromDB();
-            SetAllItemOptionFromDB();
-            SetAllMenuMainFromDB();
-            SetAllMenuOptionFromDB();
-            SetAssignedItemMainFromDB();
-            SetAssignedItemOptionFromDB();
-            SetAssignedMenuMainFromDB();
-            SetAssignedMenuOptionFromDB();
-            SetSettingsFromDB();
+            if (!Directory.Exists(FilePathConst.DBFolder))
+            {
+                Directory.CreateDirectory(FilePathConst.DBFolder);
+            }
+
+            SetDataFromDB(FilePathConst.AllItemMainPath, AllItemMain);
+            SetDataFromDB(FilePathConst.AllItemOptionPath, AllItemOption);
+            SetDataFromDB(FilePathConst.AllMenuMainPath, AllMenuMain);
+            SetDataFromDB(FilePathConst.AllMenuOptionPath, AllMenuOption);
+
+            SetDataFromDB(FilePathConst.AccountPath, Accounts, SettingConst.MaxAccountButtonNo);
+
+            SetDataFromDB(FilePathConst.AssignedItemMainPath, AssignedItemMain, SettingConst.MaxItemMainButtonNo);
+            SetDataFromDB(FilePathConst.AssignedItemOptionPath, AssignedItemOption, SettingConst.MaxItemOptionButtonNo);
+            SetDataFromDB(FilePathConst.AssignedMenuMainPath, AssignedMenuMain, SettingConst.MaxMenuMainButtonNo);
+            SetDataFromDB(FilePathConst.AssignedMenuOptionPath, AssignedMenuOption, SettingConst.MaxMenuOptionButtonNo);
+
+            SetDataFromDB(FilePathConst.SettingsPath, Settings);
+
+            // work on orders later
         }
 
-        public void SaveSessionToDB()
+        protected void SaveSessionToDB()
         {
-            SaveAccountToDB();
-            SaveAllItemMainToDB();
-            SaveAllItemOptionToDB();
-            SaveAllMenuMainToDB();
-            SaveAllMenuOptionToDB();
-            SaveAssignedItemMainToDB();
-            SaveAssignedItemOptionToDB();
-            SaveAssignedMenuMainToDB();
-            SaveAssignedMenuOptionToDB();
-            SaveSettingsToDB();
+            SaveDataToDB(FilePathConst.AllItemMainPath, AllItemMain);
+            SaveDataToDB(FilePathConst.AllItemOptionPath, AllItemOption);
+            SaveDataToDB(FilePathConst.AllMenuMainPath, AllMenuMain);
+            SaveDataToDB(FilePathConst.AllMenuOptionPath, AllMenuOption);
+
+            SaveDataToDB(FilePathConst.AccountPath, Accounts);
+
+            SaveDataToDB(FilePathConst.AssignedItemMainPath, AssignedItemMain);
+            SaveDataToDB(FilePathConst.AssignedItemOptionPath, AssignedItemOption);
+            SaveDataToDB(FilePathConst.AssignedMenuMainPath, AssignedMenuMain);
+            SaveDataToDB(FilePathConst.AssignedMenuOptionPath, AssignedMenuOption);
+
+            SaveDataToDB(FilePathConst.SettingsPath, Settings);
         }
 
-        public void Add<V>(Dictionary<int,V> dictionary, V value)
+        // Add Item
+        public void Add<V>(Dictionary<int, V> dictionary, V value)
         {
             dictionary[dictionary.Count] = value;
         }
 
-        public void Add<V>(Dictionary<int, V> dictionary, int key, V value)
+        // Add relationship
+        public void Add<T>(T[] array, int index, T element)
         {
-            dictionary[key] = value;
+            array[index] = element;
         }
 
-        public void Delete<V>(Dictionary<int, V> dictionary, int key)
+        // usually used when deleting an item; delete all relationships then delete the item itself; rearrange after
+        public void Delete<V>(Dictionary<int, V> allDict, int[] assignArray, int key)
         {
-            dictionary.Remove(key);
-        }
-
-        // delete all matching values then delete
-        public void Delete<V>(Dictionary<int,V> allDict, Dictionary<int,int> assignDict, int key)
-        {
-            foreach(var kvp in assignDict)
+            // delete all assigned relationship
+            for (int i = 0; i < assignArray.Length; i++)
             {
-                if (kvp.Value == key)
+                if (assignArray[i] == key)
                 {
-                    Delete(assignDict, key);
+                    assignArray[i] = SettingConst.NoAssignedEntityId;
                 }
             }
 
             allDict.Remove(key);
-            RearrangeId(allDict);
+            RearrangeId(allDict, assignArray, key + 1);
         }
 
-        public void Move<V>(Dictionary<int,V> dictionary, int oldKey, int newKey, V value)
+        // Delete relationship (usually used for buttons)
+        public void Delete(int[] array, int index)
         {
-            Delete(dictionary, oldKey);
-            Add(dictionary, newKey, value);
+            array[index] = SettingConst.NoAssignedEntityId;
         }
 
-        private void RearrangeId<V>(Dictionary<int, V> dictionary)
+        // Delete relationship (usually used for buttons)
+        public void Delete<T>(T?[] array, int index) where T : class
         {
-            int i = 0;
-            int noKeysChecked = 0;
-            int dictSize = dictionary.Count;
+            array[index] = null;
+        }
 
-            // find the first slot with a key that doesn't exist
-            while (noKeysChecked < dictSize)
+        // Move relationship (usually used for buttons)
+        public void Move(int[] array, int oldKey, int newKey, int value)
+        {
+            Add(array, newKey, value);
+            Delete(array, oldKey);
+        }
+
+        // Move relationship (usually used for buttons)
+        public void Move<T>(T?[] array, int oldKey, int newKey, T value) where T : class
+        {
+            Add(array, newKey, value);
+            Delete(array, oldKey);
+        }
+
+        private void RearrangeId<V>(Dictionary<int,V> allDict, int[] assignArray, int index)
+        {
+            int dictSize = allDict.Count;
+
+            for (int i = 0; i < assignArray.Length; i++)
             {
-                if (dictionary.ContainsKey(i))
+                if (assignArray[i] >= index)
                 {
-                    noKeysChecked++;
-                    i++;
+                    assignArray[i]--;
                 }
             }
 
-            // traverse to find an existing key and copy the value over
-            while (noKeysChecked < dictSize)
+            while (index < dictSize)
             {
-                while (!dictionary.ContainsKey(i))
-                {
-                    i++;
-                }
+                allDict[index - 1] = allDict[index];
+                allDict.Remove(index);
 
-                dictionary[noKeysChecked] = dictionary[i];
-                dictionary.Remove(i);
-
-                noKeysChecked++;
-                i++;
+                index++;
             }
         }
 
-        protected abstract void SetAccountFromDB();
-        protected abstract void SetAllItemMainFromDB();
-        protected abstract void SetAllItemOptionFromDB();
-        protected abstract void SetAllMenuMainFromDB();
-        protected abstract void SetAllMenuOptionFromDB();
-        protected abstract void SetAssignedItemMainFromDB();
-        protected abstract void SetAssignedItemOptionFromDB();
-        protected abstract void SetAssignedMenuMainFromDB();
-        protected abstract void SetAssignedMenuOptionFromDB();
-        protected abstract void SetSettingsFromDB();
-        protected abstract void SaveAccountToDB();
-        protected abstract void SaveAllItemMainToDB();
-        protected abstract void SaveAllItemOptionToDB();
-        protected abstract void SaveAllMenuMainToDB();
-        protected abstract void SaveAllMenuOptionToDB();
-        protected abstract void SaveAssignedItemMainToDB();
-        protected abstract void SaveAssignedItemOptionToDB();
-        protected abstract void SaveAssignedMenuMainToDB();
-        protected abstract void SaveAssignedMenuOptionToDB();
-        protected abstract void SaveSettingsToDB();
+        protected abstract void SetDataFromDB<V>(string filePath, Dictionary<int, V>? dictionary);
+        protected abstract void SetDataFromDB<T>(string filePath, T[]? array, int length) where T : class;
+        protected abstract void SetDataFromDB(string filePath, int[]? array, int length);
+        protected abstract void SetDataFromDB(string filePath, Settings? obj);
+        protected abstract void SaveDataToDB<T>(string filePath, T obj);
     }
 }

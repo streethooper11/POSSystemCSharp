@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,7 +34,7 @@ namespace MyPoSSystem.WholeBackend.Security
             byte[] key2 = new byte[KEY_SIZE];
 
             Buffer.BlockCopy(initialKey, 0, key1, 0, KEY_SIZE);
-            Buffer.BlockCopy(initialKey, 0, key2, KEY_SIZE, KEY_SIZE);
+            Buffer.BlockCopy(initialKey, KEY_SIZE, key2, 0, KEY_SIZE);
 
             byte[] ciphertext = CryptoFunctions.EncryptStringToBytes_Aes(json, key1);
             byte[] hmac = CryptoFunctions.GetHMACFromText(ciphertext, key2);
@@ -57,7 +58,7 @@ namespace MyPoSSystem.WholeBackend.Security
          * 7. If the two HMACs do not match, throw exception
          * 8. If the two HMACs match, decrypt the plaintext and return the result
          */
-        public static string DecryptJson(string json)
+        public static string DecryptJson(byte[] json)
         {
             byte[] initialKey = CreateInitialKey(); // 64 bytes
 
@@ -65,25 +66,25 @@ namespace MyPoSSystem.WholeBackend.Security
             byte[] key2 = new byte[KEY_SIZE];
 
             Buffer.BlockCopy(initialKey, 0, key1, 0, KEY_SIZE);
-            Buffer.BlockCopy(initialKey, 0, key2, KEY_SIZE, KEY_SIZE);
+            Buffer.BlockCopy(initialKey, KEY_SIZE, key2, 0, KEY_SIZE);
 
-            byte[] calcHMAC = CryptoFunctions.GetHMACFromText(CryptoFunctions.GetByteArrayFromString(json), key2);
-            byte[] textHMAC = CryptoFunctions.GetByteArrayFromString(json.Substring(json.Length - HMAC_LENGTH));
+            byte[] cipherBytes = new byte[json.Length - HMAC_LENGTH];
+            byte[] textHMAC = new byte[HMAC_LENGTH];
+
+            Buffer.BlockCopy(json, 0, cipherBytes, 0, json.Length - HMAC_LENGTH);
+            Buffer.BlockCopy(json, json.Length - HMAC_LENGTH, textHMAC, 0, HMAC_LENGTH);
+
+            byte[] calcHMAC = CryptoFunctions.GetHMACFromText(cipherBytes, key2);
 
             if (textHMAC.Length == calcHMAC.Length &&
                 calcHMAC.SequenceEqual(textHMAC))
             {
-                return CryptoFunctions.DecryptStringFromBytes_Aes(json, key1);
+                return CryptoFunctions.DecryptStringFromBytes_Aes(cipherBytes, key1);
             }
             else
             {
                 throw new HMACMismatchException("HMAC does not match");
             }
-        }
-
-        public static string DecryptJson(byte[] json)
-        {
-            return DecryptJson(CryptoFunctions.GetStringFromByteArray(json));
         }
 
         private static byte[] CreateInitialKey()
