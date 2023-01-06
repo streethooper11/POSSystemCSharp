@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Automation.Peers;
 using System.Xml.Linq;
 
 namespace MyPoSSystem.WholeBackend.Abstracts
@@ -18,7 +19,8 @@ namespace MyPoSSystem.WholeBackend.Abstracts
     {
         private string _name;
         private decimal _price;
-        private decimal _itemTaxPercentage;
+        public decimal itemTaxPercentage { get; protected set; }
+        public string category;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -48,15 +50,16 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             }
         }
 
-        protected Item(string name, decimal price)
+        protected Item(string name, decimal price, string category)
         {
             _name = name;
             _price = price;
+            this.category = category;
         }
 
-        protected Item(string name, decimal price, decimal itemTaxPercentage) : this(name, price)
+        protected Item(string name, decimal price, decimal itemTaxPercentage, string category) : this(name, price, category)
         {
-            _itemTaxPercentage = itemTaxPercentage;
+            this.itemTaxPercentage = itemTaxPercentage;
         }
 
         // Create the OnPropertyChanged method to raise the event

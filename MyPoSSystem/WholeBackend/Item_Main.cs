@@ -17,26 +17,23 @@ namespace MyPoSSystem.WholeBackend
     public class Item_Main : Item
     {
         private Menu_Option? _optionMenu;
-        private string _category;
 
-        public Item_Main(string name, decimal price, string category) : base(name, price)
+        public Item_Main(string name, decimal price, string category) : base(name, price, category)
         {
-            _category = category;
             _optionMenu = null;
         }
 
-        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category) : base(name, price, itemTaxPercentage)
+        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category) : base(name, price, itemTaxPercentage, category)
         {
-            _category = category;
             _optionMenu = null;
         }
 
-        public Item_Main(string name, decimal price, string category, Menu_Option optionMenu) : this(name, price, category)
+        public Item_Main(string name, decimal price, string category, Menu_Option optionMenu) : base(name, price, category)
         {
             _optionMenu = optionMenu;
         }
 
-        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category, Menu_Option optionMenu) : this(name, price, itemTaxPercentage, category)
+        public Item_Main(string name, decimal price, decimal itemTaxPercentage, string category, Menu_Option optionMenu) : base(name, price, itemTaxPercentage, category)
         {
             _optionMenu = optionMenu;
         }

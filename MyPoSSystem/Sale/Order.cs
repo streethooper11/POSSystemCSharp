@@ -36,7 +36,7 @@ namespace MyPoSSystem.Sale
 
             while ((index < _orderedItems.Count) && (_orderedItems[index] is Item_Option))
             {
-                _orderedItems.RemoveAt(index);
+                _orderedItems.RemoveAt(index); // remove all options that follow the main item
             }
         }
 
@@ -50,6 +50,52 @@ namespace MyPoSSystem.Sale
         {
             var result = new List<Order>();
 
+            for (int i = 0; i < nums; i++)
+            {
+                result.Add(new Order());
+            }
+
+            decimal totalPrice, eachPrice, eachPriceWithPenny;
+            int penniesDifference;
+
+            foreach (var item in _orderedItems)
+            {
+                totalPrice = item.Price * 100; // multiplied by 100 to make it a whole number
+                eachPrice = Math.Floor(totalPrice / nums);
+                penniesDifference = (int)(totalPrice - (eachPrice * nums)); // calculates the difference of flooring value in the number of pennies
+
+                eachPrice /= 100; // revert to 2 decimal places
+                eachPriceWithPenny = eachPrice + 0.01m;
+
+                for (int i = 0; i < nums; i++)
+                {
+                    if (penniesDifference == 0)
+                    {
+                        if (item is Item_Main)
+                        {
+                            result[i].Add(new Item_Main(item.Name, eachPrice, item.itemTaxPercentage, item.category));
+                        }
+                        else
+                        {
+                            result[i].Add(new Item_Option(item.Name, eachPrice, item.itemTaxPercentage, item.category));
+                        }
+                    }
+                    else
+                    {
+                        if (item is Item_Main)
+                        {
+                            result[i].Add(new Item_Main(item.Name, eachPriceWithPenny, item.itemTaxPercentage, item.category));
+                        }
+                        else
+                        {
+                            result[i].Add(new Item_Option(item.Name, eachPriceWithPenny, item.itemTaxPercentage, item.category));
+                        }
+
+                        penniesDifference--;
+                    }
+                }
+            }
+
             return result;
         }
 
@@ -57,6 +103,11 @@ namespace MyPoSSystem.Sale
         public List<Order> SplitBill(List<MyObservableCollection<Item>> list)
         {
             var result = new List<Order>();
+
+            foreach (var order in list)
+            {
+                result.Add(new Order(order));
+            }
 
             return result;
         }

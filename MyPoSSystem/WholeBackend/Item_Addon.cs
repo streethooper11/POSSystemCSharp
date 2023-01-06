@@ -11,11 +11,11 @@ namespace MyPoSSystem.WholeBackend
 {
     public class Item_Option : Item
     {
-        public Item_Option(string name, decimal price) : base(name, price)
+        public Item_Option(string name, decimal price, string category) : base(name, price, category)
         {
         }
 
-        public Item_Option(string name, decimal price, decimal itemTaxPercentage) : base(name, price, itemTaxPercentage)
+        public Item_Option(string name, decimal price, decimal itemTaxPercentage, string category) : base(name, price, itemTaxPercentage, category)
         {
         }
     }

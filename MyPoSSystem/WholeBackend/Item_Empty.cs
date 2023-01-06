@@ -11,7 +11,7 @@ namespace MyPoSSystem.WholeBackend
 {
     public class Item_Empty : Item
     {
-        public Item_Empty() : base("", decimal.MinusOne)
+        public Item_Empty() : base("", decimal.MinusOne, "")
         {
         }
     }
