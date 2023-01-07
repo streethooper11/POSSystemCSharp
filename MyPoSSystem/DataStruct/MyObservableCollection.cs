@@ -43,6 +43,16 @@ namespace MyPoSSystem.DataStruct
             }
         }
 
+        public void AddRange(IEnumerable<T> collection)
+        {
+            CheckReentrancy();
+
+            foreach (var item in collection)
+            {
+                Add(item);
+            }
+        }
+
         private void items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e != null)

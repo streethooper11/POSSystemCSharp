@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using MyPoSSystem.DataStruct;
 
 namespace MyPoSSystem.Sale
@@ -46,6 +47,16 @@ namespace MyPoSSystem.Sale
             Orders.RemoveAt(index);
             Orders.InsertRange(index, result);
             OnPropertyChanged();
+        }
+
+        public void Void()
+        {
+            Orders.Clear();
+        }
+
+        public void Merge(Table table)
+        {
+            Orders.AddRange(table.Orders);
         }
 
         // Create the OnPropertyChanged method to raise the event

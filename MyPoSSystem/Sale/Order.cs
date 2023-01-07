@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using MyPoSSystem.DataStruct;
 
 namespace MyPoSSystem.Sale
@@ -116,6 +117,16 @@ namespace MyPoSSystem.Sale
             }
 
             return result;
+        }
+
+        public void Void()
+        {
+            _orderedItems.Clear();
+        }
+
+        public void Merge(MyObservableCollection<Item> list)
+        {
+            _orderedItems.AddRange(list);
         }
 
         // Create the OnPropertyChanged method to raise the event
