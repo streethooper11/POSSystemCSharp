@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using MyPoSSystem.Constants;
 using MyPoSSystem.WholeBackend.DataStruct;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Sale
 {
     // Abstract representation of a menu which contains name
     public abstract class Menu : INotifyPropertyChanged
@@ -58,7 +58,7 @@ namespace MyPoSSystem.WholeBackend.Abstracts
             _name = name;
             _items = items;
         }
-        
+
         // Create the OnPropertyChanged method to raise the event
         // The calling member's name will be used as the parameter.
         protected void OnPropertyChanged([CallerMemberName] string name = null)

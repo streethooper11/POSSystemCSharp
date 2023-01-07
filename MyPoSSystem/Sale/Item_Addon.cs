@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using MyPoSSystem.WholeBackend.Abstracts;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem.Sale
 {
     public class Item_Option : Item
     {

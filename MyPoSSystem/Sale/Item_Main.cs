@@ -6,9 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using MyPoSSystem.WholeBackend.Abstracts;
-
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem.Sale
 {
     /**
      * Main item is an item that can be sold separately

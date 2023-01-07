@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Sale
 {
     // A menu that contains a list of main items
     public class Menu_Main : Menu

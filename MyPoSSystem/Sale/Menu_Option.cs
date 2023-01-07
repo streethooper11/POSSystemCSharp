@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using MyPoSSystem.WholeBackend.DataStruct;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Sale
 {
     // A menu that contains a list of option items
     public class Menu_Option : Menu

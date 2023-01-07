@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation.Peers;
 using System.Xml.Linq;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Sale
 {
     // Abstract representation of an item with name and price
     // Source for INotifyPropertyChanged:

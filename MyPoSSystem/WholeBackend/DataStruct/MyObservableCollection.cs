@@ -32,6 +32,17 @@ namespace MyPoSSystem.WholeBackend.DataStruct
             }
         }
 
+        public void InsertRange(int index, IEnumerable<T> collection)
+        {
+            CheckReentrancy();
+
+            foreach (var item in collection)
+            {
+                InsertItem(index, item);
+                index++;
+            }
+        }
+
         private void items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e != null)

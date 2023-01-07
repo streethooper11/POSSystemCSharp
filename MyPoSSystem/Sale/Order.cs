@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using MyPoSSystem.WholeBackend;
-using MyPoSSystem.WholeBackend.Abstracts;
 using MyPoSSystem.WholeBackend.DataStruct;
 
 namespace MyPoSSystem.Sale
 {
-    public class Order
+    public class Order : INotifyPropertyChanged
     {
         private MyObservableCollection<Item> _orderedItems;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public Order()
         {
@@ -28,6 +30,7 @@ namespace MyPoSSystem.Sale
         public void Add(Item item)
         {
             _orderedItems.Add(item);
+            OnPropertyChanged();
         }
 
         public void RemoveMain(int index)
@@ -38,15 +41,18 @@ namespace MyPoSSystem.Sale
             {
                 _orderedItems.RemoveAt(index); // remove all options that follow the main item
             }
+
+            OnPropertyChanged();
         }
 
         public void RemoveOption(int index)
         {
             _orderedItems.RemoveAt(index);
+            OnPropertyChanged();
         }
 
         // split each item equally
-        public List<Order> SplitBill(int nums)
+        public List<Order> Split(int nums)
         {
             var result = new List<Order>();
 
@@ -100,7 +106,7 @@ namespace MyPoSSystem.Sale
         }
 
         // split based on the list of items
-        public List<Order> SplitBill(List<MyObservableCollection<Item>> list)
+        public List<Order> Split(List<MyObservableCollection<Item>> list)
         {
             var result = new List<Order>();
 
@@ -110,6 +116,13 @@ namespace MyPoSSystem.Sale
             }
 
             return result;
+        }
+
+        // Create the OnPropertyChanged method to raise the event
+        // The calling member's name will be used as the parameter.
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
