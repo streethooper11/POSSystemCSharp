@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.DataStruct
+namespace MyPoSSystem.DataStruct
 {
     // https://stackoverflow.com/questions/901921/observablecollection-and-item-propertychanged
     public class MyObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged

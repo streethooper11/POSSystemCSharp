@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
 
-namespace MyPoSSystem.WholeBackend.Security
+namespace MyPoSSystem.Security
 {
     public class JSonCrypto
     {

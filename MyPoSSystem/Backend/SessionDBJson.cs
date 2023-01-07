@@ -8,17 +8,17 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
-using MyPoSSystem.WholeBackend.Abstracts;
-using MyPoSSystem.WholeBackend.DataStruct;
+using MyPoSSystem.DataStruct;
+using MyPoSSystem.Manage;
 
-namespace MyPoSSystem.WholeBackend.Session
+namespace MyPoSSystem.Backend
 {
     public class SessionDBJson : SessionDB
     {
         private readonly JsonWorker _jsonWorker;
 
-        public SessionDBJson() : base() 
-        { 
+        public SessionDBJson() : base()
+        {
             _jsonWorker = new JsonWorker();
             SetSessionFromDB();
         }
@@ -41,7 +41,7 @@ namespace MyPoSSystem.WholeBackend.Session
                 return _jsonWorker.ReadDataFromDB<Account>(filePath, length);
             }
 
-            File.Create(filePath).Close();    
+            File.Create(filePath).Close();
             MyObservableCollection<Account> col = new MyObservableCollection<Account>();
 
             for (int i = 0; i < length; i++)

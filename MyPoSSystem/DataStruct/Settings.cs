@@ -7,9 +7,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
-using MyPoSSystem.Sale.Hardware_Control;
+using MyPoSSystem.Hardware;
+using MyPoSSystem.WholeBackend;
 
-namespace MyPoSSystem.WholeBackend.Session
+namespace MyPoSSystem.DataStruct
 {
     public class Settings
     {

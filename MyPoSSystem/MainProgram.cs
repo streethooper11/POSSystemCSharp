@@ -15,8 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using MyPoSSystem.Constants;
-using MyPoSSystem.WholeBackend.Abstracts;
-using MyPoSSystem.WholeBackend.Session;
+using MyPoSSystem.Backend;
 
 namespace MyPoSSystem
 {

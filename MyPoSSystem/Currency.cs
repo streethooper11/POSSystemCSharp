@@ -1,5 +1,4 @@
-﻿using MyPoSSystem.WholeBackend.Session;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem
 {
     public class Currency
     {

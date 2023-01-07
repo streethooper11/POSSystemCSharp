@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MyPoSSystem.Constants;
-using MyPoSSystem.WholeBackend.DataStruct;
+using MyPoSSystem.DataStruct;
 
 namespace MyPoSSystem.Sale
 {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using MyPoSSystem.WholeBackend.Abstracts;
+using MyPoSSystem.Manage;
 
-namespace MyPoSSystem.WholeBackend.Session
+namespace MyPoSSystem.Backend
 {
     public class SessionAccount
     {
@@ -14,7 +14,7 @@ namespace MyPoSSystem.WholeBackend.Session
 
         public SessionAccount(Account account)
         {
-            s_accountSession= account;
+            s_accountSession = account;
         }
     }
 }

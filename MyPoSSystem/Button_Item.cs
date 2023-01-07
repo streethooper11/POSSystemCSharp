@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml.Linq;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem
 {
     // A button with Id
     public class ButtonWithId : Button

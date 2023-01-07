@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.DataStruct
+namespace MyPoSSystem.DataStruct
 {
     public class MyInt : INotifyPropertyChanged
     {
@@ -38,23 +38,24 @@ namespace MyPoSSystem.WholeBackend.DataStruct
         public static implicit operator int(MyInt obj) => obj.Value;
         public static implicit operator MyInt(int value) => new MyInt(value);
 
-        public static MyInt operator ++ (MyInt origin) {
+        public static MyInt operator ++(MyInt origin)
+        {
             origin.Value++;
             return origin;
         }
 
-        public static MyInt operator -- (MyInt origin)
+        public static MyInt operator --(MyInt origin)
         {
             origin.Value--;
             return origin;
         }
 
-        public static bool operator == (MyInt obj1, MyInt obj2)
+        public static bool operator ==(MyInt obj1, MyInt obj2)
         {
             return obj1._value == obj2._value;
         }
 
-        public static bool operator != (MyInt obj1, MyInt obj2)
+        public static bool operator !=(MyInt obj1, MyInt obj2)
         {
             return obj1._value != obj2._value;
         }

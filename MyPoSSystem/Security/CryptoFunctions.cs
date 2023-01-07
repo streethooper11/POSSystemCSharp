@@ -4,7 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MyPoSSystem.WholeBackend.Security
+namespace MyPoSSystem.Security
 {
     // Source: https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aes?view=net-7.0
     public class CryptoFunctions

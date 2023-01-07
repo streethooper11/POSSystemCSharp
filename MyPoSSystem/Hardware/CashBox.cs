@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using MyPoSSystem.WholeBackend.Abstracts;
 
-namespace MyPoSSystem.Sale.Hardware_Control
+namespace MyPoSSystem.Hardware
 {
     public class CashBox : Hardware
     {

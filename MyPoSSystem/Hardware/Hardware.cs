@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Hardware
 {
     public abstract class Hardware
     {

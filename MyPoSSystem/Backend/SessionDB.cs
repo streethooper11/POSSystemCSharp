@@ -12,13 +12,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using MyPoSSystem.Constants;
-using MyPoSSystem.Sale;
-using MyPoSSystem.WholeBackend.DataStruct;
-using MyPoSSystem.WholeBackend.Security;
-using MyPoSSystem.WholeBackend.Session;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+using MyPoSSystem.Constants;
+using MyPoSSystem.DataStruct;
+using MyPoSSystem.Manage;
+using MyPoSSystem.Sale;
+
+namespace MyPoSSystem.Backend
 {
     public abstract class SessionDB
     {

@@ -8,12 +8,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using MyPoSSystem.WholeBackend.Abstracts;
-using MyPoSSystem.WholeBackend.DataStruct;
-using MyPoSSystem.WholeBackend.Security;
-using MyPoSSystem.WholeBackend.Session;
+using MyPoSSystem.DataStruct;
+using MyPoSSystem.Security;
 
-namespace MyPoSSystem.WholeBackend
+namespace MyPoSSystem.Backend
 {
     public class JsonWorker : DBWorker
     {

@@ -1,4 +1,4 @@
-﻿using MyPoSSystem.WholeBackend.DataStruct;
+﻿using MyPoSSystem.DataStruct;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Manage
 {
     // Abstract representation of an account with username and PIN
     public abstract class Account : INotifyPropertyChanged

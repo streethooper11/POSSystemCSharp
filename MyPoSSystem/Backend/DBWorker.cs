@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MyPoSSystem.DataStruct;
 
-using MyPoSSystem.WholeBackend.DataStruct;
-
-namespace MyPoSSystem.WholeBackend.Abstracts
+namespace MyPoSSystem.Backend
 {
     public abstract class DBWorker
     {

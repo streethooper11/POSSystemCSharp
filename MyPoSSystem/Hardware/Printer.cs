@@ -1,5 +1,4 @@
-﻿using MyPoSSystem.WholeBackend.Abstracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyPoSSystem.Sale.Hardware_Control
+namespace MyPoSSystem.Hardware
 {
     public class Printer : Hardware
     {
