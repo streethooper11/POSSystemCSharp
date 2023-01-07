@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 using MyPoSSystem.Constants;
 using MyPoSSystem.Hardware;
-using MyPoSSystem.WholeBackend;
 
 namespace MyPoSSystem.DataStruct
 {
